@@ -1,3 +1,48 @@
+
+/*
+  Variables
+*/
+
+var zoom = d3.behavior
+.zoom()
+.scaleExtent([1, 20])
+.on("zoom", move);
+
+var width = document.getElementById("container").offsetWidth;
+var height = width * 0.55;
+
+var lastPlot = "none";
+var lastZone = "none";
+
+var scaleResize = 1;
+var currentZoom = 1;
+// Origin or Destiny selector
+var mouseSelectorOD = "origin";
+
+var gradientsArray = [];
+
+let totalSum = 0;
+let matODdownload;
+var topo,
+lagosTopo,
+manchaTopo,
+eixosTopo,
+originOD,
+destinyOD,
+nomeIdZonaCenter,
+projection,
+path,
+svg,
+g,
+legendSVGright,
+legendSVGleft,
+gLegend,
+defs;
+
+/*
+Functions
+*/
+
 function setup(width, height) {
 
   projection = d3.geo
@@ -86,7 +131,6 @@ function loadedJSONs(error, results){
    lagos(lagosTopo);
    generateZoneLists(nomeIdZonaCenter);
 }
-
 
 function selectAsZone(node){
 
