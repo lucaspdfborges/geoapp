@@ -274,8 +274,8 @@ function plotFlowOD(){
 
       var colorGrad = baseColorArray();
 
-      flowOdLegendLeft(max, colorGrad);
-      flowOdLegendRight(max, colorGrad);
+      legendCircle(colorGrad, max, "n° de viagens intra-zonal")
+      legendVariableStroke(max, colorGrad, "n° de viagens entre zonas");
   });
 
   $("#container-legend").css('display','flex');

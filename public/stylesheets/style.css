@@ -204,10 +204,15 @@ input[type="radio"]:checked + label {
     left: 0;
 }
 
+
+#svgChart{
+    overflow: hidden;
+}
+
 .containerSvg {
-  width: 100vw;
+  width: calc( 100vw - 1em );
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
 }
 
 #container-legend {
