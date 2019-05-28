@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Error</title>
+    <link rel="stylesheet" href="/stylesheets/error.css">
+  </head>
+  <body>
+    <p>I'm so sorry, but we found an error:</p>
+    <h1><%= error.status %> <%= message %></h1
+    <p>The log is the following:</p>
+    <pre><%= error.stack %></pre>
+  </body>
+</html>
