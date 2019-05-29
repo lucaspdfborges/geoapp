@@ -192,10 +192,10 @@ function generateZoneLists(jsonFile){
       generateSearchList(jsonFile)
 }
 
-function clearSearch(){
+function clearSearch(element){
   $("#search").val('');
   $("#search-url li").hide();
-  $(this).css('opacity','0');
+  element.css('opacity','0');
 
    $(".macrozona").each(function() {
      node = d3.select("#"+ $(this).attr("id"));
@@ -357,7 +357,7 @@ function zoneClickInteresseBox(node, d){
   lastZone = "#MZ_" + d.properties.ID;
 
   //TODO change
-  if(lastPlot=="interest"){
+  if(lastPlot=="interest" && !isPlottingInterest){
     interestPlot();
     var inputID = "#MZ_Z_"+node.attr("macrozona");
     $(inputID).prop( "checked", true );

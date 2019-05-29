@@ -1,4 +1,6 @@
 
+var isPlottingInterest = false;
+
 function selectAsZone(node){
 
   if($("#originEsp").is(":checked")  || $("#destEsp").is(":checked") ){
@@ -53,10 +55,8 @@ function generateInterestList(jsonFile){
     var thisBlock = $("#zona-block");
     thisBlock.css("border-left","2px solid #e6e4ec");
 
-    if(lastPlot=="interest"){
-      var id = "#MZ_Z_"+ node.attr("macrozona");
-      console.log(id);
-      interesseInputClick(id);
+    if(lastPlot=="interest" && !isPlottingInterest){
+      interestPlot();
     }
 
   })
@@ -251,6 +251,9 @@ function interestCentroids(mz, data, max, coords, ratios, baseColor){
 
 function interestPlot(){
 
+  if(!isPlottingInterest){
+    console.log(isPlottingInterest);
+  isPlottingInterest = true;
   clearAll();
 
   var fileURL = "";
@@ -350,4 +353,7 @@ function interestPlot(){
   $("#top-content").hide();
 
   lastPlot = "interest";
+  isPlottingInterest = false;
+
+ }
 }

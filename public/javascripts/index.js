@@ -34,7 +34,7 @@ d3.queue(2)
     .awaitAll(loadedJSONs);
 
 $("#clear-search").on("click",function(){
-  clearSearch();
+  clearSearch($(this));
 });
 
 $("#centerMap").on("click", function(){
@@ -124,17 +124,16 @@ $("#indicadoresBox input").on("change",function(){
 
 $("#interesseBox input").on("change",function(){
   if(lastPlot=="interest"){
-    var node = d3.select(lastZone);
-    var id = "#MZ_Z_"+ node.attr("macrozona");
-    console.log(id);
-    interesseInputClick(id);
+    interestPlot();
   }
 });
 
-$("#zona-url li input").on("change",function(){
-  var node = d3.select(lastZone);
-  var id = "#MZ_Z_"+ node.attr("macrozona");
-  console.log(id);
-  interesseInputClick(id);
-  alert("change");
+$("#hide-menu").on("click",function(){
+  if($(this).is(":checked")){
+    $("#hideMenuLabel").css("color","#202127");
+    $(".grid-wrappers").first().fadeOut("fast");
+  }else{
+    $("#hideMenuLabel").css("color","#aaa");
+    $(".grid-wrappers").first().show();
+  }
 });
