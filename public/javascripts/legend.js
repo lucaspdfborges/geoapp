@@ -30,7 +30,17 @@ function legendCircle(colorArray, max, title){
   .append("text")
   .attr("font-size", "0.75em")
   .attr("x", function(d,i){
-    return (51*i - 15);
+    if(i<10){
+        return (50*i - 5);
+    }
+     else if(i<100){
+        return (50*i - 9);
+    } else if(i < 1000){
+        return (50*i - 30);
+    } else{
+      return (50*i - 35);
+    }
+
   })
   .attr("y", 65)
   .text(function(d,i){

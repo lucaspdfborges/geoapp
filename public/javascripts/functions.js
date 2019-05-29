@@ -364,37 +364,6 @@ function zoneClickInteresseBox(node, d){
   }
 }
 
-function zoneClickIndicadoresBox(node){
-
-  var value = node.attr("title");
-  if($("#container-legend svg").length){
-       $("#mode-distribution").remove();
-
-        var val1 = 0;
-
-        if(lastPlot=="originTrips"){
-           var origin = originOD[node.attr("macrozona")];
-
-           if ($("#horapico").is(":checked")) {
-             val1 = Math.round(100*origin.TC_total/(origin.TC_total + origin.TI_total));
-            } else {
-              val1 = Math.round(100*origin.TC_PPM/(origin.TC_PPM + origin.TI_PPM));
-            }
-
-        }else if(lastPlot=="destinyTrips"){
-           var destiny = destinyOD[node.attr("macrozona")];
-          if ($("#horapico").is(":checked")) {
-             val1 = Math.round(100*destiny.TC_total/(destiny.TC_total + destiny.TI_total));
-            } else {
-              val1 = Math.round(100*destiny.TC_PPM/(destiny.TC_PPM + destiny.TI_PPM));
-            }
-        }
-
-        var val2 = 100-val1;
-        zoneLegend("",legendSVGright,val1, val2);
-  }
-}
-
 function zoneClick(node, d){
 
     let nodeClicked = node.attr("clicked");
@@ -406,7 +375,7 @@ function zoneClick(node, d){
       zoneClickInteresseBox(node, d);
 
     } else if($("#indicadoresBox").attr("class")=="grid-container"){
-      zoneClickIndicadoresBox(node);
+      //zoneClickIndicadoresBox(node);
     }
 
     node.attr("clicked", 1 - nodeClicked);

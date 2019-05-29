@@ -19,7 +19,7 @@ function selectAsZone(node){
       });
 
       if(nodeClicked == 0){
-        node.style("fill", "#AAC");
+        node.style("fill", "#779");
       }else{
         node.style("fill", "rgba(219,220,222,0.5)");
       }
