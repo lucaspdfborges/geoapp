@@ -146,7 +146,7 @@ function createFlowOdPaths(data, max, currentZoom){
     .attr("stroke-linecap", "round")
     .attr("stroke-width", function(d,i) {
     var ratio = d[1]/max;
-    return ((1 + (10 * ratio))/currentZoom);
+    return ( (10 * ratio)/currentZoom);
   })
   .on("mousemove", function(d, i) {
 
@@ -204,7 +204,7 @@ function createFlowOdCentroids(data, max, currentZoom){
         })
           .attr("r", function(d,i) {
           var ratio = d[1]/max;
-          var radius =((1 + 15 * ratio/currentZoom));
+          var radius =((16 * ratio/currentZoom));
           return (radius||0);
         })
           .attr("fill",function(d,i) {
@@ -228,7 +228,7 @@ function createFlowOdCentroids(data, max, currentZoom){
         })
           .attr("r", function(d,i) {
           var ratio = d[1]/max;
-          var radius = ((1 + 15 * ratio)/currentZoom);
+          var radius = ((16* ratio)/currentZoom);
           return (radius||0);
         })
           .attr("fill",function(d,i) {
