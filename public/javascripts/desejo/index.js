@@ -53,6 +53,12 @@ function generateInterestList(jsonFile){
     var thisBlock = $("#zona-block");
     thisBlock.css("border-left","2px solid #e6e4ec");
 
+    if(lastPlot=="interest"){
+      var id = "#MZ_Z_"+ node.attr("macrozona");
+      console.log(id);
+      interesseInputClick(id);
+    }
+
   })
   .attr("id", function(d,i){
     return "MZ_Z_" + d.MACROZONA;
@@ -252,11 +258,14 @@ function interestPlot(){
     if ($(this).attr("clicked") > 0) {
 
       var mz = $(this).attr("macrozona").toString();
+      var inputID = "#MZ_Z_" + mz;
       var mzName = " "+$(this).attr("title").toString()+" : "+ $(this).attr("macrozona").toString();
       var interestParams = interestPlotParams(mz);
       var filePath = interestParams[0];
       var baseColor = interestParams[1];
       var val1 = interestParams[2] || 0;
+
+      $(inputID).prop( "checked", true );
 
       if($("#container-legend svg").length){
         $("#container-legend svg").remove();
