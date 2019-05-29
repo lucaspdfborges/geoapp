@@ -721,6 +721,17 @@ function responsivefy(svg) {
       scaleResize = w/oldWidth;
       svg.attr('width', w);
       svg.attr('height', Math.round(w / aspect));
+
+      // TODO recorrect
+      d3.selectAll(".macrozona").style("stroke-width", 2/(scaleResize * currentZoom) );
+      d3.selectAll(".verde").style("stroke-width", 1.5/(scaleResize * currentZoom));
+      d3.selectAll(".lagos").style("stroke-width", 1.5/(scaleResize * currentZoom));
+
+      d3.selectAll(".eixo").style("stroke-width", function() {
+        return 1/(scaleResize * currentZoom);
+      });
+
+
   }
 
 }

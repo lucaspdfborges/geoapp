@@ -166,7 +166,7 @@ function interestPaths(mz, data, max, coords, ratios, baseColor){
   })
   .attr("stroke-linecap", "round")
   .attr("stroke-width", function(d,i) {
-    return (10 * ratios[i]);
+    return (10 * ratios[i] / currentZoom);
   })
   .attr("stroke", function(d,i) {
     var color = baseColorFunction(baseColor, ratios[i]);
@@ -196,7 +196,7 @@ function interestCentroids(mz, data, max, coords, ratios, baseColor){
       }
     })
     .attr("r", function(d,i) {
-      var radius = 16 * ratios[i];
+      var radius = 16 * ratios[i] / currentZoom;
       return (radius||0);
     })
     .on("mousemove", function(d, i) {
