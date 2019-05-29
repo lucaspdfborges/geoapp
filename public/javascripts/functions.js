@@ -717,7 +717,7 @@ function indicadoresInputClick(){
   }
 }
 
-function interesseInputClick(){
+function interesseInputClick(inputID){
   if(lastPlot=="interest"){
 
     var node = d3.select(lastZone);

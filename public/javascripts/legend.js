@@ -48,9 +48,9 @@ function legendCircle(colorArray, max, title){
 
   legend
   .append("text")
-  .attr("font-size", "0.775em")
+  .attr("font-size", "0.85em")
   .attr("x", function(){
-    return (50);
+    return (40);
   })
   .attr("y", 15)
   .text(title)
@@ -61,8 +61,8 @@ function legendStroke(colorArray, max, title){
 
     legendSVG = d3.select('#container-legend')
                       .append("svg")
-                      .attr("width", 600)
-                      .attr("height", height/5);
+                      .attr("width", 280)
+                      .attr("height", 80);
 
     var legend = legendSVG.append("g");
 
@@ -71,7 +71,7 @@ function legendStroke(colorArray, max, title){
     .enter()
     .append("rect")
     .attr("x", function(d,i){
-      return (51*i+51);
+      return (51*i + 5);
     })
     .attr("y", 22)
     .attr("width", 50)
@@ -87,9 +87,9 @@ function legendStroke(colorArray, max, title){
     .append("text")
     .attr("font-size", "0.75em")
     .attr("x", function(d,i){
-      return (51*i+51);
+      return (51*i + 5);
     })
-    .attr("y", 15)
+    .attr("y", 50)
     .text(function(d,i){
       return (Math.round((i/4)*max));
     })
@@ -102,17 +102,20 @@ function legendStroke(colorArray, max, title){
     });
 
     legend.append("text")
-    .attr("font-size", "0.75em")
-    .attr("x", function(){
-      return (0);
-    })
-    .attr("y", 30)
+    .attr("font-size", "0.875em")
+    .attr("x", 5)
+    .attr("y", 15)
     .text(title)
-    .style("fill","#555");
+    .style("fill","#333");
 
 }
 
-function zoneLegend(zoneName, legendSVG, val1, val2){
+function zoneLegend(zoneName, val1, val2){
+
+  legendSVG = d3.select('#container-legend')
+                    .append("svg")
+                    .attr("width", 415)
+                    .attr("height", 80);
 
    var info = legendSVG.append("g").attr("id","mode-distribution");
 
@@ -133,7 +136,7 @@ function zoneLegend(zoneName, legendSVG, val1, val2){
           }
         })
         .attr("y", function(d,i){
-          return 35+12*(i+(i/5));
+          return 50+12*(i+(i/5));
         })
         .text(function(d,i){
            return d.toString()+" % "+rectText[i];
@@ -142,31 +145,41 @@ function zoneLegend(zoneName, legendSVG, val1, val2){
           return rectColorsText[i];
         });
 
-   var textLegend = zoneName ;
+   var textLegend = '' ;
    if($("#destEsp").is(":checked")){
      textLegend  += " Indicador de destino: ";
    }else if($("#originEsp").is(":checked")){
      textLegend  += " Indicador de origem: ";
    }
 
-    if ($("#coletivo").is(":checked") && !$("#individual").is(":checked")) {
+    if ($("#coletivoDV").is(":checked") && !$("#individualDV").is(":checked")) {
       textLegend += "coletivo";
-    }else if($("#individual").is(":checked") && !$("#coletivo").is(":checked")){
+    }else if($("#individualDV").is(":checked") && !$("#coletivoDV").is(":checked")){
       textLegend += "coletivo";
-    }else{
+    }else if($("#individualDV").is(":checked") && $("#coletivoDV").is(":checked")){
       textLegend += "coletivo e individual";
-    };
+    } else {
+      textLegend += "[selecionar modal]";
+      alert("selecione modal")
+    }
 
     if ($("#horapico").is(":checked")) {
-      textLegend += " - hora pico.";
+      textLegend += " - hora pico";
     } else {
-      textLegend += " - total.";
+      textLegend += " - total";
     }
 
     info.append("text")
-    .attr("font-size", "0.95em")
+    .attr("font-size", "0.85em")
     .attr("x", 0)
     .attr("y", 15)
+    .text(zoneName)
+    .style("fill","#333");
+
+    info.append("text")
+    .attr("font-size", "0.85em")
+    .attr("x", 0)
+    .attr("y", 30)
     .text(textLegend)
     .style("fill","#555");
 
@@ -176,7 +189,7 @@ function zoneLegend(zoneName, legendSVG, val1, val2){
     .append("rect")
     .attr("x", 0)
     .attr("y", function(d,i){
-      return 25+12*(i+(i/5));
+      return 40+12*(i+(i/5));
     })
     .attr("width", function(d,i){
       return 3*d;
@@ -187,20 +200,6 @@ function zoneLegend(zoneName, legendSVG, val1, val2){
     .attr("height", 12);
 
 }
-
-function tripsLegend(colorFunction, maxLegend){
-
-    var colorGrad =[];
-
-    for(var i = 0; i < 5; i++){
-      var color = colorFunction(i/4);
-      colorGrad.push(color);
-    }
-
-    $("#container-legend svg").remove();
-    legendStroke(colorGrad, maxLegend, "viagens");
-}
-
 
 function legendVariableStroke(max, colorGrad, title){
 

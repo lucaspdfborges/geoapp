@@ -123,5 +123,18 @@ $("#indicadoresBox input").on("change",function(){
 });
 
 $("#interesseBox input").on("change",function(){
-  interesseInputClick();
+  if(lastPlot=="interest"){
+    var node = d3.select(lastZone);
+    var id = "#MZ_Z_"+ node.attr("macrozona");
+    console.log(id);
+    interesseInputClick(id);
+  }
+});
+
+$("#zona-url li input").on("change",function(){
+  var node = d3.select(lastZone);
+  var id = "#MZ_Z_"+ node.attr("macrozona");
+  console.log(id);
+  interesseInputClick(id);
+  alert("change");
 });

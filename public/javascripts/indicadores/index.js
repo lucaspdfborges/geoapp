@@ -54,6 +54,20 @@ function tripsRepresentation(jsonFile,colorFunction){
    tripsLegend(colorFunction, maxLegend);
 }
 
+function tripsLegend(colorFunction, maxLegend){
+
+    var colorGrad =[];
+
+    for(var i = 0; i < 5; i++){
+      var color = colorFunction(i/4);
+      colorGrad.push(color);
+    }
+
+    $("#container-legend svg").remove();
+    legendStroke(colorGrad, maxLegend, "N° de viagens");
+}
+
+
 function plotOriginTrips(){
   clearAll();
   lastPlot = "originTrips";
@@ -79,7 +93,6 @@ function plotDestinyTrips(){
 $("#destinyTripsBtn").click(function() {
    plotDestinyTrips();
 });
-
 
 
 function flowOdData(jsonFile){

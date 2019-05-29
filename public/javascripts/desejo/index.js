@@ -252,7 +252,7 @@ function interestPlot(){
     if ($(this).attr("clicked") > 0) {
 
       var mz = $(this).attr("macrozona").toString();
-      var mzName = " "+$(this).attr("title").toString()+" : "+ $(this).attr("macrozona").toString()+" - ";
+      var mzName = " "+$(this).attr("title").toString()+" : "+ $(this).attr("macrozona").toString();
       var interestParams = interestPlotParams(mz);
       var filePath = interestParams[0];
       var baseColor = interestParams[1];
@@ -330,15 +330,8 @@ function interestPlot(){
             colorGrad.push(color);
           }
 
-          legendCircle(colorGrad, max, "viagens");
-
-          var legendSVGright = d3.select('#container-legend')
-                            .append("svg")
-                            .attr("id","legendRight")
-                            .attr("width",600)
-                            .attr("height", height/5);
-
-          zoneLegend(mzName, legendSVGright, val1, val2);
+          legendCircle(colorGrad, max, "N° de viagens");
+          zoneLegend(mzName, val1, val2);
 
         });
       }

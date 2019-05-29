@@ -212,7 +212,7 @@ input[type="radio"]:checked + label {
 .containerSvg {
   width: calc( 100vw - 1em );
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 #container-legend {
