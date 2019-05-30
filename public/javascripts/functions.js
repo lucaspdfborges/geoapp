@@ -503,7 +503,6 @@ function clearAll(){
 
   $(".macrozona").css("stroke","");
   $("#container-legend").hide();
-  $("#top-content").fadeIn();
   $('#heatMapBtn').prop('checked', false);
   $("#origem-block").css("background-image", "linear-gradient( rgba(100,250,250,0.1), rgba(255, 255, 255,0))");
   $("#destino-block").css("background-image", "none");

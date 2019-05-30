@@ -350,7 +350,6 @@ function interestPlot(){
     });
 
   $("#container-legend").css('display','flex');
-  $("#top-content").hide();
 
   lastPlot = "interest";
   isPlottingInterest = false;

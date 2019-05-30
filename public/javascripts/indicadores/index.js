@@ -74,7 +74,6 @@ function plotOriginTrips(){
 
   tripsRepresentation(originOD, blueColorFunction);
    $("#container-legend").css('display','flex');
-   $("#top-content").hide();
 }
 
 $("#originTripsBtn").click(function() {
@@ -87,7 +86,6 @@ function plotDestinyTrips(){
 
   tripsRepresentation(destinyOD,redColorFunction);
   $("#container-legend").css('display','flex');
-  $("#top-content").hide();
 }
 
 $("#destinyTripsBtn").click(function() {
@@ -292,5 +290,4 @@ function plotFlowOD(){
   });
 
   $("#container-legend").css('display','flex');
-  $("#top-content").hide();
 }
