@@ -670,6 +670,7 @@ button#clear-map:hover {
 
 #clear-search {
   display: inline-block;
+  border: 1px solid #eee;
   opacity: 0;
   color: #a1a1a5;
   font-size: 1.125em;
