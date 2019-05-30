@@ -599,10 +599,9 @@ tbody tr:nth-child(2n-1) {
   background-position: 1em 1em;
   background-repeat: no-repeat;
   padding: 1em 0em 1em 3em;
-  border: 1px solid rgba(255, 255, 255, 0.7);
   color: #2a2559;
   border-radius: 2em;
-  border: 2px solid #eee;
+  border: 1px solid #eee;
   margin-left: 0.25em;
 
   -webkit-transition: border 0.125s ease-out;
@@ -613,7 +612,7 @@ tbody tr:nth-child(2n-1) {
 }
 
 #search:hover {
-  border: 2px solid #9e9aad;
+  border: 1px solid #9e9aad;
 }
 
 #top-content-wrapper {

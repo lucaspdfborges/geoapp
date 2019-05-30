@@ -424,14 +424,42 @@ function draw(topo) {
 }
 
 function centerMap(){
-
   var s =1;
   var tx = 0;
   var ty = 0;
 
+  currentZoom = 1;
+  scaleZoom = 1/currentZoom;
+
   var t = [tx, ty];
   g = d3.select("#container g");
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+  //adjust the trafficZone hover stroke width based on zoom level
+  d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom) );
+  d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize * currentZoom) );
+  d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize * currentZoom) );
+
+  d3.selectAll(".centroid").attr("r", function() {
+    let node = d3.select(this);
+    let ratio = node.attr("ratio");
+    let radius = 16 /(scaleResize * currentZoom)  * ratio;
+    return radius;
+  });
+
+  d3.selectAll(".line-centroid").style("stroke-width", function() {
+    let node = d3.select(this);
+    let ratio = node.attr("ratio");
+    return 10 * ratio / s;
+  });
+
+  d3.selectAll(".eixo").style("stroke-width", function() {
+    return 1  / (scaleResize * currentZoom) ;
+  });
+
+  d3.selectAll(".centroid").style("stroke-width", function() {
+    return 1  / (scaleResize * currentZoom) ;
+  });
 
 }
 
@@ -454,29 +482,29 @@ function move() {
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
   //adjust the trafficZone hover stroke width based on zoom level
-  d3.selectAll(".macrozona").style("stroke-width", 2 / s);
-  d3.selectAll(".verde").style("stroke-width", 1.5 / s);
-  d3.selectAll(".lagos").style("stroke-width", 1.5 / s);
+  d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize *s));
+  d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize *s));
+  d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize *s));
 
   d3.selectAll(".centroid").attr("r", function() {
     let node = d3.select(this);
     let ratio = node.attr("ratio");
-    let radius = 16 / s * ratio;
+    let radius = 16 / (scaleResize *s) * ratio;
     return radius;
   });
 
   d3.selectAll(".line-centroid").style("stroke-width", function() {
     let node = d3.select(this);
     let ratio = node.attr("ratio");
-    return 10 * ratio / s;
+    return 10 * ratio / (scaleResize *s);
   });
 
   d3.selectAll(".eixo").style("stroke-width", function() {
-    return 1  / s;
+    return 1  / (scaleResize *s);
   });
 
   d3.selectAll(".centroid").style("stroke-width", function() {
-    return 1  / s;
+    return 1  / (scaleResize *s);
   });
 }
 
@@ -717,11 +745,11 @@ function responsivefy(svg) {
 
   function resize() {
       const w = parseInt(container.style('width'));
+
       scaleResize = w/oldWidth;
       svg.attr('width', w);
       svg.attr('height', Math.round(w / aspect));
 
-      // TODO recorrect
       d3.selectAll(".macrozona").style("stroke-width", 2/(scaleResize * currentZoom) );
       d3.selectAll(".verde").style("stroke-width", 1.5/(scaleResize * currentZoom));
       d3.selectAll(".lagos").style("stroke-width", 1.5/(scaleResize * currentZoom));
