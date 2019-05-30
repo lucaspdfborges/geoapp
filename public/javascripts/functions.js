@@ -71,12 +71,15 @@ function focusArea(width, height, lnCenter) {
 
   var kx = 2;
   var ky = -4;
+
   var tx = -width*(1 - 0.5/s - kx*(mapCenter[0] - lnCenter[0]));
   var ty = -height*(1 - 0.5/s - ky*(mapCenter[1] - lnCenter[1]));
 
   var t = [tx, ty];
   g = d3.select("#container g");
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+  zoom.scale(3).translate(t);
 }
 
 function setupGradients(listColors){
@@ -173,8 +176,8 @@ function generateSearchList(jsonFile){
             $(this).css("stroke-width", "");
           });
 
-          $(mzID).attr("stroke","#A53");
-          $(mzID).attr("stroke-width","2");
+          $(mzID).attr("stroke","#335");
+          $(mzID).attr("stroke-width","0.67");
 
         })
         .append('a')
@@ -424,6 +427,7 @@ function draw(topo) {
 }
 
 function centerMap(){
+
   var s =1;
   var tx = 0;
   var ty = 0;
@@ -432,8 +436,12 @@ function centerMap(){
   scaleZoom = 1/currentZoom;
 
   var t = [tx, ty];
+
   g = d3.select("#container g");
+
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+  zoom.scale(1).translate([0,0]);
 
   //adjust the trafficZone hover stroke width based on zoom level
   d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom) );
@@ -479,7 +487,7 @@ function move() {
   );
 
   zoom.translate(t);
-  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+  g.attr("transform", "translate(" + t + ") scale(" + s + ")");
 
   //adjust the trafficZone hover stroke width based on zoom level
   d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize *s));
