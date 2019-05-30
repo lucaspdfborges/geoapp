@@ -647,7 +647,7 @@ function destinyBlockClick(){
 
 function selectAllAsOrigin(thisElement){
 
-  thisElement.parent("li").siblings().each(function(index, element){
+  $("#origem-url li").each(function(index, element){
     var newState = thisElement.is(":checked");
     $(element).find("input").prop("checked", newState);
  });
@@ -660,7 +660,7 @@ function selectAllAsOrigin(thisElement){
 
 function selectAllAsDestiny(thisElement){
 
-  thisElement.parent("li").siblings().each(function(index, element){
+  $("#destino-url li").each(function(index, element){
     var newState = thisElement.is(":checked");
     $(element).find("input").prop("checked", newState);
  });

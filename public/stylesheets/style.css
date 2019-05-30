@@ -411,6 +411,14 @@ button:hover {
   justify-content: center;
 }
 
+
+.duo-li {
+  grid-column: 1 / 3;
+  display: flex;
+  justify-content: left;
+  padding-left: 0.5em;
+}
+
 .trio {
   grid-column: 1 / 4;
   display: flex;
@@ -906,7 +914,7 @@ div.grid-wrappers {
 #origem-block-div,
 #destino-block-div,
 #zona-block-div {
-  height: 10em;
+  height: 9.5em;
   overflow: scroll;
 }
 
@@ -925,8 +933,8 @@ div.grid-wrappers {
   color: #779;
 }
 
-#origem-block li:first-child,
-#destino-block li:first-child {
+#origem-todos + label,
+#destino-todos + label{
   font-weight: bold;
 }
 
