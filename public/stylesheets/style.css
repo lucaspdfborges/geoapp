@@ -616,7 +616,8 @@ tbody tr:nth-child(2n-1) {
 }
 
 #top-content-wrapper {
-  position: absolute;
+  position: fixed;
+  top: 0;
   width: 100vw;
 }
 

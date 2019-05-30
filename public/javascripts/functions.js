@@ -16,6 +16,10 @@ var lastZone = "none";
 
 var scaleResize = 1;
 var currentZoom = 1;
+var clickZoomDelta = 0;
+var currentX = 0;
+var currentY = 0;
+
 // Origin or Destiny selector
 var mouseSelectorOD = "origin";
 
@@ -33,6 +37,7 @@ nomeIdZonaCenter,
 projection,
 path,
 svg,
+svgScale,
 g,
 legendSVGright,
 legendSVGleft,
@@ -79,8 +84,110 @@ function focusArea(width, height, lnCenter) {
   g = d3.select("#container g");
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
+  currentX = tx;
+  currentY = ty;
+
   zoom.scale(3).translate(t);
 }
+
+function zoomIn() {
+
+
+    var clicked = d3.event.target,
+        direction = 1,
+        factor = 0.1,
+        target_zoom = 1,
+        center = [width / 2, height / 2],
+        extent = zoom.scaleExtent(),
+        translate = zoom.translate(),
+        translate0 = [],
+        l = [],
+        view = {x: translate[0], y: translate[1], k: zoom.scale()};
+
+    d3.event.preventDefault();
+
+    if(currentZoom<=17){
+    clickZoomDelta += factor;
+
+    target_zoom = zoom.scale() * (1 + factor);
+
+    translate0 = [(center[0] - view.x) / view.k, (center[1] - view.y) / view.k];
+    view.k = target_zoom;
+    l = [translate0[0] * view.k + view.x, translate0[1] * view.k + view.y];
+
+    view.x += center[0] - l[0];
+    view.y += center[1] - l[1];
+
+    console.log("t ", [view.x, view.y], "| k ", view.k);
+
+    g = d3.select("#container g");
+    g.attr("transform",
+        "translate(" + [view.x, view.y] + ")" +
+        "scale(" + view.k + ")"
+    );
+
+    zoom.scale(view.k).translate([view.x, view.y]);
+    currentZoom =view.k;
+  }
+}
+
+function zoomOut() {
+
+    var clicked = d3.event.target,
+        direction = 1,
+        factor = 0.1,
+        target_zoom = 1,
+        center = [width / 2, height / 2],
+        extent = zoom.scaleExtent(),
+        translate = zoom.translate(),
+        translate0 = [],
+        l = [],
+        view = {x: translate[0], y: translate[1], k: zoom.scale()};
+
+    d3.event.preventDefault();
+
+    if(currentZoom>=1.1){
+    clickZoomDelta += factor;
+
+    target_zoom = zoom.scale() * (1 - factor);
+
+    translate0 = [(center[0] - view.x) / view.k, (center[1] - view.y) / view.k];
+    view.k = target_zoom;
+    l = [translate0[0] * view.k + view.x, translate0[1] * view.k + view.y];
+
+    view.x += center[0] - l[0];
+    view.y += center[1] - l[1];
+
+    console.log("t ", [view.x, view.y], "| k ", view.k);
+
+    g = d3.select("#container g");
+    g.attr("transform",
+        "translate(" + [view.x, view.y] + ")" +
+        "scale(" + view.k + ")"
+    );
+
+    zoom.scale(view.k).translate([view.x, view.y]);
+    currentZoom =view.k;
+  }
+}
+
+d3.select("#clear-map")
+  .append("button")
+  .attr("id","zoomin")
+  .attr("class","reverse-colors")
+  .attr("title","Zoom In")
+  .on('click', zoomIn)
+  .append("i")
+  .attr("class","fas fa-plus");
+
+d3.select("#clear-map")
+  .append("button")
+  .attr("id","zoomout")
+  .attr("title","Zoom In")
+  .attr("class","reverse-colors")
+  .on('click', zoomOut)
+  .append("i")
+  .attr("class","fas fa-minus");
 
 function setupGradients(listColors){
 
@@ -433,6 +540,8 @@ function centerMap(){
   var ty = 0;
 
   currentZoom = 1;
+  currentX = 0;
+  currentY = 0;
   scaleZoom = 1/currentZoom;
 
   var t = [tx, ty];
@@ -485,6 +594,11 @@ function move() {
     h * (s - 1) + h * s,
     Math.max(height * (1 - s) - h * s, t[1])
   );
+
+  console.log('t: ',t);
+
+  currentX = t[0];
+  currentY = t[1];
 
   zoom.translate(t);
   g.attr("transform", "translate(" + t + ") scale(" + s + ")");
