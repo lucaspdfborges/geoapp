@@ -19,11 +19,6 @@
       <div class="scroll-pad-right"></div>
       <div class="grid-wrappers">
 
-        <div id="clear-map">
-          <button type="button" class="resetBtn reverse-colors">Limpar <i class="far fa-map"></i></button>
-          <button type="button" id="centerMap" class="reverse-colors">Centro <i class="fas fa-map-marked-alt"></i></button>
-        </div>
-
         <div id="origemDestinoBox" class="grid-container-blocked">
 
           <div class="container-title">
@@ -177,12 +172,19 @@
 
         <div id="top-content-wrapper">
           <div id="top-content">
+
+            <div id="clear-map">
+              <button type="button" class="resetBtn reverse-colors" title="Limpar Mapa"><i class="far fa-map"></i></button>
+              <button type="button" id="centerMap" class="reverse-colors" title="Centralizar Mapa"><i class="fas fa-map-marked-alt"></i></button>
+            </div>
+
             <div id="search-wrapper">
               <div id="search-box">
                 <input type="text" id="search" onkeyup="searchFunction()" placeholder="Procure pelas regiões . . ." title="procure pelas regioes">
                 <i id="clear-search" class="fa fa-times"></i>
               </div>
             </div>
+
           </div>
         </div>
 
