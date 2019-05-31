@@ -20,6 +20,8 @@ var tooltipNum = tooltip
 
 setup(width, height);
 
+zoomButtons();
+
 setupGradients(listColors);
 
 d3.queue(2)
@@ -101,11 +103,11 @@ $("#heatMapBtn").change(function(){
 });
 
 $("#origem-block").on("click", function(){
-  originBlockClick();
+  originBlockClick($(this));
 });
 
 $("#destino-block").on("click", function(){
-  destinyBlockClick();
+  destinyBlockClick($(this));
 });
 
 $("#origem-todos").on("change", function(){
@@ -115,7 +117,6 @@ $("#origem-todos").on("change", function(){
 $("#destino-todos").on("change", function(){
     selectAllAsDestiny($(this));
 });
-
 
 $("#indicadoresBox input").on("change",function(){
   indicadoresInputClick();

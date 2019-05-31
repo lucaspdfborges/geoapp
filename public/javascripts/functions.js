@@ -17,8 +17,6 @@ var lastZone = "none";
 var scaleResize = 1;
 var currentZoom = 1;
 var clickZoomDelta = 0;
-var currentX = 0;
-var currentY = 0;
 
 // Origin or Destiny selector
 var mouseSelectorOD = "origin";
@@ -132,9 +130,6 @@ function focusArea(width, height, lnCenter) {
   g = d3.select("#container g");
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
-  currentX = tx;
-  currentY = ty;
-
   zoom.scale(3).translate(t);
   createScale(baseScale/3);
 }
@@ -218,7 +213,9 @@ function zoomOut() {
   }
 }
 
-d3.select("#clear-map")
+function zoomButtons(){
+
+  d3.select("#clear-map")
   .append("button")
   .attr("id","zoomin")
   .attr("class","reverse-colors")
@@ -227,7 +224,7 @@ d3.select("#clear-map")
   .append("i")
   .attr("class","fas fa-plus");
 
-d3.select("#clear-map")
+  d3.select("#clear-map")
   .append("button")
   .attr("id","zoomout")
   .attr("title","Zoom In")
@@ -235,6 +232,7 @@ d3.select("#clear-map")
   .on('click', zoomOut)
   .append("i")
   .attr("class","fas fa-minus");
+}
 
 function setupGradients(listColors){
 
@@ -563,10 +561,7 @@ function draw(topo) {
   .style("fill", function(d, i) {
     //todo modify
     return "rgba(219,220,222,0.5)";
-  });
-
-  //tooltips
-  trafficZone
+  })
   .on("mousemove", function(d, i) {
     let node = d3.select(this);
     zoneMouseMove(node, d);
@@ -587,8 +582,6 @@ function centerMap(){
   var ty = 0;
 
   currentZoom = 1;
-  currentX = 0;
-  currentY = 0;
   scaleZoom = 1/currentZoom;
 
   var t = [tx, ty];
@@ -641,9 +634,6 @@ function move() {
     h * (s - 1) + h * s,
     Math.max(height * (1 - s) - h * s, t[1])
   );
-
-  currentX = t[0];
-  currentY = t[1];
 
   zoom.translate(t);
   g.attr("transform", "translate(" + t + ") scale(" + s + ")");
@@ -817,20 +807,20 @@ function saveSvg(svgEl, name) {
 }
 
 
-function originBlockClick(){
+function originBlockClick(element){
   mouseSelectorOD = "origin";
-  $(this).find("h4").css("color","#167");
-  $(this).css("background-image","linear-gradient( rgba(100,250,250,0.1), rgba(255, 255, 255,0))");
+  element.find("h4").css("color","#167");
+  element.css("background-image","linear-gradient( rgba(100,250,250,0.1), rgba(255, 255, 255,0))");
   $("#destino-block").css("background-image","none");
   $("#destino-block").find("h4").css("color","#2a2559");
 }
 
-function destinyBlockClick(){
+function destinyBlockClick(element){
   mouseSelectorOD = "destiny";
   $("#origem-block").css("background-image","none");
   $("#origem-block").find("h4").css("color","#2a2559");
-  $(this).find("h4").css("color","#A55");
-  $(this).css("background-image","linear-gradient( rgba(250,120,150,0.1), rgba(255, 255, 255,0))");
+  element.find("h4").css("color","#A55");
+  element.css("background-image","linear-gradient( rgba(250,120,150,0.1), rgba(255, 255, 255,0))");
 
   if($("#destino-block input:checkbox:checked").length > 0 && $("#origem-block input:checkbox:checked").length > 0){
     $("#selectedBtn").attr("disabled", false);

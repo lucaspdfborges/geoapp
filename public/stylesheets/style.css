@@ -222,9 +222,7 @@ input[type="radio"]:checked + label {
     left: 0;
 }
 
-
 #svgChart{
-    overflow: hidden;
     height: 100vh;
     width: 100vw;
   }
@@ -259,7 +257,6 @@ input[type="radio"]:checked + label {
 
 #container {
   border-radius: 0.5em;
-  overflow: hidden;
   width: 100vw;
   height: 100vh;
 }
