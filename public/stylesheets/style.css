@@ -63,7 +63,7 @@ p.tooltipMunicipio {
   width: 17em;
   direction: rtl;
   max-height: calc( 100vh - 4em);
-  overflow: scroll;
+  overflow-y: scroll;
   padding: 1em 2em 2em 3.5em;
 
   -webkit-transition: all 0.25s linear;
@@ -109,6 +109,10 @@ h5 {
 
 .card{
   height: 100vh;
+}
+
+#clear-map{
+    padding-left: 17em;
 }
 
 #clear-map button {

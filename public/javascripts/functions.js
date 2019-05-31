@@ -448,9 +448,9 @@ function zoneMouseMove(node,d){
     .attr(
       "style",
       "left:" +
-      (mouse[0] + offsetL) +
+      (mouse[0] - 4*offsetL) +
       "px;top:" +
-      (mouse[1] + offsetT) +
+      (mouse[1] - 30*offsetT) +
       "px"
     );
 
@@ -814,6 +814,12 @@ function originBlockClick(element){
   element.css("background-image","linear-gradient( rgba(100,250,250,0.1), rgba(255, 255, 255,0))");
   $("#destino-block").css("background-image","none");
   $("#destino-block").find("h4").css("color","#2a2559");
+  var nextBlock = $("#destino-block");
+  if(nextBlock.is(":hidden")){
+    nextBlock.fadeTo(200, 1.0);
+    nextBlock.show();
+    $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
+  }
 }
 
 function destinyBlockClick(element){
@@ -823,13 +829,13 @@ function destinyBlockClick(element){
   element.find("h4").css("color","#A55");
   element.css("background-image","linear-gradient( rgba(250,120,150,0.1), rgba(255, 255, 255,0))");
 
-  if($("#destino-block input:checkbox:checked").length > 0 && $("#origem-block input:checkbox:checked").length > 0){
-    $("#selectedBtn").attr("disabled", false);
-    $("#selectedBtn").css("opacity", "1.0");
-  }else{
-    $("#selectedBtn").attr("disabled", true);
-    $("#selectedBtn").css("opacity", "0.3");
-  };
+  var nextBlock = $("#destino-block").parent(".grid-container").find(".container-block").last();
+  if(nextBlock.is(":hidden")){
+    nextBlock.fadeTo(200, 1.0);
+    nextBlock.show();
+    nextBlock.css("background","pink");
+    $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
+  }
 }
 
 function selectAllAsOrigin(thisElement){
@@ -860,6 +866,10 @@ function selectAllAsDestiny(thisElement){
 
 function scrollToLi(elementID) {
   var elmnt = document.getElementById(elementID);
+  elmnt.scrollIntoView({ block: 'end', behavior: 'smooth' });
+}
+
+function scrollToBlock(elmnt) {
   elmnt.scrollIntoView({ block: 'end', behavior: 'smooth' });
 }
 

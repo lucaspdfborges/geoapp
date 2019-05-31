@@ -46,6 +46,7 @@ function selectAsDestiny(node){
       nextBlock.fadeTo(200, 1.0);
       nextBlock.show();
     }
+
 }
 
 
