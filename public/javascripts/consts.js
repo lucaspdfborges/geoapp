@@ -23,5 +23,5 @@ const macrozonaOdURL = "https://raw.githubusercontent.com/lucaspdfborges/geojson
 
 const mapCenter = [-47.797089, -15.77526];
 
-const offsetL =  20;
-const offsetT =  10;
+const offsetL =  5;
+const offsetT =  5;
