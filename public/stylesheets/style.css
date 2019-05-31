@@ -56,8 +56,10 @@ p.tooltipMunicipio {
 .grid-wrappers {
   z-index:4;
   position: absolute;
-  width: 15em;
-  overflow: hidden;
+  width: 17em;
+  direction: rtl;
+  max-height: calc( 100vh - 4em);
+  overflow: scroll;
   padding: 1em 2em 2em 3.5em;
 
   -webkit-transition: all 0.25s linear;
@@ -66,6 +68,8 @@ p.tooltipMunicipio {
   -o-transition: all 0.25s linear;
   transition: all 0.25s linear;
 }
+
+
 
 h1 {
   font-family: "Montserrat", sans-serif;
@@ -152,6 +156,11 @@ input[type="radio"]:checked + label {
   color: #69668a;
   font-style: italic;
   padding-left: 1em;
+}
+
+#table-matriz{
+  position: fixed;
+  left: 0px;
 }
 
 .eixo {
@@ -326,6 +335,7 @@ button:hover {
 }
 
 .grid-container {
+  direction: ltr;
   border-left: 5px solid #cfcdd4;
   box-shadow: 0px 0px 3px rgba(207,205,212);
   background-color: rgba(252, 251, 255, 0.95);

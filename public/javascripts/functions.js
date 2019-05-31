@@ -167,8 +167,6 @@ function zoomIn() {
     view.x += center[0] - l[0];
     view.y += center[1] - l[1];
 
-    console.log("t ", [view.x, view.y], "| k ", view.k);
-
     g = d3.select("#container g");
     g.attr("transform",
         "translate(" + [view.x, view.y] + ")" +
@@ -207,8 +205,6 @@ function zoomOut() {
 
     view.x += center[0] - l[0];
     view.y += center[1] - l[1];
-
-    console.log("t ", [view.x, view.y], "| k ", view.k);
 
     g = d3.select("#container g");
     g.attr("transform",
@@ -645,8 +641,6 @@ function move() {
     h * (s - 1) + h * s,
     Math.max(height * (1 - s) - h * s, t[1])
   );
-
-  console.log('t: ',t);
 
   currentX = t[0];
   currentY = t[1];
