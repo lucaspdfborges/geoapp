@@ -8,12 +8,14 @@ body {
 
 .scroll-pad-left{
   width: 20em;
+  height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
 }
 
 .scroll-pad-right{
+  height: 100vh;
   width: 8vw;
   position: absolute;
   top: 0;
@@ -95,6 +97,10 @@ h4 {
 
 h5 {
   color: #779;
+}
+
+.card{
+  height: 100vh;
 }
 
 #clear-map button {
@@ -210,7 +216,9 @@ input[type="radio"]:checked + label {
 
 #svgChart{
     overflow: hidden;
-}
+    height: 100vh;
+    width: 100vw;
+  }
 
 .containerSvg {
   width: calc( 100vw - 1em );
@@ -243,6 +251,8 @@ input[type="radio"]:checked + label {
 #container {
   border-radius: 0.5em;
   overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 }
 
 .hidden {

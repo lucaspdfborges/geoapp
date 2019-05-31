@@ -67,9 +67,10 @@ function setup(width, height) {
   .call(zoom)
   .on("click", click);
 
-  g = svg.append("g");
+  g = svg.append("g")
+          .attr("height","100vh");
 
-  createScale(2000);
+  createScale(baseScale);
 
 }
 
@@ -135,6 +136,7 @@ function focusArea(width, height, lnCenter) {
   currentY = ty;
 
   zoom.scale(3).translate(t);
+  createScale(baseScale/3);
 }
 
 function zoomIn() {
@@ -175,6 +177,7 @@ function zoomIn() {
 
     zoom.scale(view.k).translate([view.x, view.y]);
     currentZoom =view.k;
+    createScale(baseScale/currentZoom);
   }
 }
 
@@ -215,6 +218,7 @@ function zoomOut() {
 
     zoom.scale(view.k).translate([view.x, view.y]);
     currentZoom =view.k;
+    createScale(baseScale/currentZoom);
   }
 }
 
@@ -675,6 +679,8 @@ function move() {
   d3.selectAll(".centroid").style("stroke-width", function() {
     return 1  / (scaleResize *s);
   });
+
+  createScale(baseScale/currentZoom);
 }
 
 //geo translation on mouse click in map
