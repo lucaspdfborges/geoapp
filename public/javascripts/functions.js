@@ -31,6 +31,7 @@ manchaTopo,
 eixosTopo,
 originOD,
 destinyOD,
+idRa,
 nomeIdZonaCenter,
 projection,
 path,
@@ -50,7 +51,7 @@ function setup(width, height) {
 
   projection = d3.geo
   .mercator()
-  .translate([33.9 * width, - 19.8* height])
+  .translate([33.95 * width, - 19.8* height])
   .scale(40 * width);
 
   path = d3.geo.path().projection(projection);
@@ -114,6 +115,13 @@ function createScale(value){
           .attr('fill',function(d,i){
             return (i%2 >0 ? "#557" : "#002");
           });
+
+    svgScale.append('text')
+            .attr("font-size", "0.75em")
+            .attr('x', 215)
+            .attr('y', 25)
+            .text('m')
+            .attr('fill',"#002");
 }
 
 function focusArea(width, height, lnCenter) {
@@ -278,6 +286,8 @@ function loadedJSONs(error, results){
    originOD = results[5];
    destinyOD = results[6];
    nomeIdZonaCenter = results[7];
+   idRa = results[8];
+   console.log("idRa",idRa);
 
    ambiente(ambienteTopo);
    mancha(manchaTopo);
@@ -833,7 +843,6 @@ function destinyBlockClick(element){
   if(nextBlock.is(":hidden")){
     nextBlock.fadeTo(200, 1.0);
     nextBlock.show();
-    nextBlock.css("background","pink");
     $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
   }
 }

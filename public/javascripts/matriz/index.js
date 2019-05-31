@@ -149,6 +149,37 @@ function createOD(testData) {
   .enter()
   .append("th")
   .append("div")
+  .on("mousemove", function(d,i){
+
+    var mouse = d3.mouse(svg.node()).map(function(dMouse) {
+      return parseInt(dMouse*scaleResize);
+    });
+
+    tooltip
+    .classed("hidden", false)
+    .attr(
+      "style",
+      "left:" +
+      (mouse[0]*0.98 - offsetL) +
+      "px;top:" +
+      (mouse[1] + offsetT) +
+      "px"
+    );
+
+    tooltipZone
+    .classed("hidden", false)
+    .html(idRa[d]);
+
+    //idRa[d]
+
+    tooltipMunicipio.classed("hidden", true);
+
+    tooltipNum.classed("hidden", true);
+
+  })
+  .on("mouseout", function(d, i) {
+    tooltip.classed("hidden", true);
+  })
   .attr("class","table-cell")
   .text(function(d) {
     return d;
@@ -164,6 +195,39 @@ function createOD(testData) {
   .attr("class","table-cell")
   .text(function(d) {
     return d[0];
+  })
+  .on("mousemove", function(d){
+
+    var node = d3.select(this);
+
+    var mouse = d3.mouse(svg.node()).map(function(dMouse) {
+      return parseInt(dMouse*scaleResize);
+    });
+
+    tooltip
+    .classed("hidden", false)
+    .attr(
+      "style",
+      "left:" +
+      (mouse[0]*0.98 - offsetL) +
+      "px;top:" +
+      (mouse[1] + offsetT) +
+      "px"
+    );
+
+    tooltipZone
+    .classed("hidden", false)
+    .html(idRa[node.text()]);
+
+    console.log("left -spot:",d[0]);
+
+    tooltipMunicipio.classed("hidden", true);
+
+    tooltipNum.classed("hidden", true);
+
+  })
+  .on("mouseout", function(d, i) {
+    tooltip.classed("hidden", true);
   });
 
   var tr2 = thead3
@@ -287,10 +351,9 @@ function arrayOD(originArray, destinyArray, odJson) {
     }
   }
 
-  $("#ODtotal").html("Total: " + Math.round(totalSum));
+  $("#ODtotal").html(Math.round(totalSum));
   return matrixOD;
 }
-
 
 function plotMatrix(){
   if ($("table").length != 0) {

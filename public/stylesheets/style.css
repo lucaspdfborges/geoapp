@@ -111,6 +111,10 @@ h5 {
   height: 100vh;
 }
 
+#table-content{
+  padding-left: 17em;
+}
+
 #clear-map{
     padding-left: 17em;
 }
@@ -160,10 +164,9 @@ input[type="radio"]:checked + label {
 
 #ODtotal {
   font-family: "Montserrat", sans-serif;
-  font-size: 0.75em;
   color: #69668a;
-  font-style: italic;
   padding-left: 1em;
+  font-weight: lighter;
 }
 
 #table-matriz{
@@ -319,6 +322,7 @@ div.tooltip {
   box-shadow: 0px 0px 2px 0px #a6a6a6;
   opacity: 0.9;
   position: absolute;
+  z-index: 12;
 }
 
 .graticule {
@@ -359,6 +363,17 @@ button:hover {
 
 #ODtitle {
   visibility: hidden;
+  font-size: 1.25em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5em;
+}
+
+#ODtitle div{
+  display: flex;
+  padding: 0 1em;
+  align-items: center;
 }
 
 .grid-container-top {
@@ -590,11 +605,12 @@ tbody tr:nth-child(2n-1) {
 }
 
 #heatMapLabel {
-  font-size: 0.75em;
+  font-size: 1.25em;
   color: #7f7c9b;
 }
 
 #heatMapBtn {
+  display: none;
   visibility: hidden;
   color: #7f7c9b;
 }
@@ -604,7 +620,7 @@ tbody tr:nth-child(2n-1) {
 }
 
 #downloadOD {
-  font-size: 0.6em;
+  font-size: 1em;
   color: #7f7c9b;
   padding-bottom: 0.25em;
 }

@@ -33,6 +33,7 @@ d3.queue(2)
     .defer(d3.json, origemOdURL)
     .defer(d3.json, destinoOdURL)
     .defer(d3.json, nomeIdZonaCenterURL)
+    .defer(d3.json, idRaURL)
     .awaitAll(loadedJSONs);
 
 $("#clear-search").on("click",function(){
