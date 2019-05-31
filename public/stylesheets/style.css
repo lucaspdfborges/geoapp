@@ -376,6 +376,15 @@ button:hover {
   align-items: center;
 }
 
+#top-pad{
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 0.5em;
+  z-index: 15;
+  background-color: white;
+}
+
 .grid-container-top {
   background-color: white;
   display: grid;
@@ -606,7 +615,7 @@ tbody tr:nth-child(2n-1) {
 
 #heatMapLabel {
   font-size: 1.25em;
-  color: #7f7c9b;
+  color: #A77;
 }
 
 #heatMapBtn {
@@ -616,7 +625,7 @@ tbody tr:nth-child(2n-1) {
 }
 
 #heatMapBtn:checked ~ label#heatMapLabel {
-  color: #2a2559;
+  color: #933;
 }
 
 #downloadOD {

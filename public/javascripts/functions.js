@@ -235,7 +235,7 @@ function zoomButtons(){
   d3.select("#clear-map")
   .append("button")
   .attr("id","zoomout")
-  .attr("title","Zoom In")
+  .attr("title","Zoom Out")
   .attr("class","reverse-colors")
   .on('click', zoomOut)
   .append("i")
