@@ -137,3 +137,18 @@ $("#hide-menu").on("click",function(){
     $(".grid-wrappers").first().show();
   }
 });
+
+$("#hide-matriz").on("change", function(){
+  if($(this).is(":checked")){
+    $("#table-content").fadeOut("fast");
+    $("#table-matriz").css("width","4em");
+    $("#hideMatrizLabel").css("transform","rotate(180deg)");
+
+  }else{
+    $("#table-content").show();
+    $("#table-matriz").css("width","100vw");
+    $("#hideMatrizLabel").css("transform","rotate(0deg)");
+
+  }
+
+});

@@ -688,6 +688,7 @@ function fetchJSONFile(path, callback) {
 
 function clearAll(){
 
+  $("#table-matriz").hide();
   $(".macrozona").css("stroke","");
   $("#container-legend").hide();
   $('#heatMapBtn').prop('checked', false);

@@ -326,6 +326,7 @@ function plotMatrix(){
       $("#results").goTo();
     }
   );
+  $("#table-matriz").show();
 }
 
 
