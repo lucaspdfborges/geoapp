@@ -68,6 +68,53 @@ function setup(width, height) {
   .on("click", click);
 
   g = svg.append("g");
+
+  createScale(2000);
+
+}
+
+function createScale(value){
+
+  $("#svgScale").remove();
+
+  var data = [0,  Math.round(value/3), Math.round(2*value/3),  Math.round(value)];
+
+  svgScale = d3.select("#top-content")
+               .append("svg")
+               .attr("width", 250)
+               .attr("height", 30)
+               .attr("id","svgScale");
+
+  svgScale.selectAll('rect')
+          .data(data)
+          .enter()
+          .append('rect')
+          .attr('width', 50)
+          .attr('height', 10)
+          .attr('x', function(d,i){
+            return 52*i;
+          })
+          .attr('y', 15)
+          .style("stroke", "#ccc")
+          .attr('fill',function(d,i){
+            return (i%2 >0 ? "#fcfcff" : "#335");
+          });
+
+  svgScale.selectAll('text')
+          .data(data)
+          .enter()
+          .append('text')
+          .attr("font-size", "0.75em")
+          .attr('x', function(d,i){
+            return 52*i;
+          })
+          .attr('y', 10)
+          .text(function(d,i){
+            return d;
+          })
+          .attr('fill',function(d,i){
+            return (i%2 >0 ? "#557" : "#002");
+          });
 }
 
 function focusArea(width, height, lnCenter) {
