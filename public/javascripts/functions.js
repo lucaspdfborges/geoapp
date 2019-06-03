@@ -116,7 +116,6 @@ function scaleData(){
     data["unit"] = "m";
   }
 
-
   return data
 }
 
@@ -143,7 +142,7 @@ function createScale(){
           .attr('width', rectWidth)
           .attr('height', 10)
           .attr('x', function(d,i){
-            return (rectWidth+2)*i + 2;
+            return (rectWidth+2)*i + 5;
           })
           .attr('y', 15)
           .style("stroke", "#ccc")
@@ -157,7 +156,8 @@ function createScale(){
           .append('text')
           .attr("font-size", "0.75em")
           .attr('x', function(d,i){
-            return (rectWidth+1)*i;
+            var backshift = 2*(d.toString().length - 1);
+            return (rectWidth+2)*i - backshift;
           })
           .attr('y', 10)
           .text(function(d,i){
