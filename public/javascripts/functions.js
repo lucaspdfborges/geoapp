@@ -175,23 +175,59 @@ function createScale(){
             .attr('fill',"#002");
 }
 
+
 function focusArea(width, height, lnCenter) {
 
   var s =3;
 
-  var kx = 2;
+  var kx = 2; // 2;
   var ky = -4;
 
-  var tx = -width*(1 - 0.5/s - kx*(mapCenter[0] - lnCenter[0]));
-  var ty = -height*(1 - 0.5/s - ky*(mapCenter[1] - lnCenter[1]));
+  var lx = 0.995;
+  var ly = 1;
+
+  var tx = -width*(1 - 0.5/s - kx*(mapCenter[0] - lx*lnCenter[0]));
+  var ty = -height*(1 - 0.5/s - ky*(mapCenter[1] - ly*lnCenter[1]));
 
   var t = [tx, ty];
   g = d3.select("#container g");
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
   zoom.scale(3).translate(t);
+  currentZoom = 3;
+  rescaleStroke();
   createScale();
 }
+
+function rescaleStroke(){
+
+      //adjust the trafficZone hover stroke width based on zoom level
+      d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom));
+      d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize * currentZoom));
+      d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize * currentZoom));
+
+      d3.selectAll(".centroid").attr("r", function() {
+        let node = d3.select(this);
+        let ratio = node.attr("ratio");
+        let radius = 16 / (scaleResize * currentZoom) * ratio;
+        return radius;
+      });
+
+      d3.selectAll(".line-centroid").style("stroke-width", function() {
+        let node = d3.select(this);
+        let ratio = node.attr("ratio");
+        return 10 * ratio / (scaleResize * currentZoom);
+      });
+
+      d3.selectAll(".eixo").style("stroke-width", function() {
+        return 1  / (scaleResize * currentZoom);
+      });
+
+      d3.selectAll(".centroid").style("stroke-width", function() {
+        return 1  / (scaleResize * currentZoom);
+      });
+}
+
 
 function zoomIn() {
 
@@ -228,33 +264,7 @@ function zoomIn() {
 
     zoom.scale(view.k).translate([view.x, view.y]);
     currentZoom =view.k;
-
-    //adjust the trafficZone hover stroke width based on zoom level
-    d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom));
-    d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize * currentZoom));
-    d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize * currentZoom));
-
-    d3.selectAll(".centroid").attr("r", function() {
-      let node = d3.select(this);
-      let ratio = node.attr("ratio");
-      let radius = 16 / (scaleResize * currentZoom) * ratio;
-      return radius;
-    });
-
-    d3.selectAll(".line-centroid").style("stroke-width", function() {
-      let node = d3.select(this);
-      let ratio = node.attr("ratio");
-      return 10 * ratio / (scaleResize * currentZoom);
-    });
-
-    d3.selectAll(".eixo").style("stroke-width", function() {
-      return 1  / (scaleResize * currentZoom);
-    });
-
-    d3.selectAll(".centroid").style("stroke-width", function() {
-      return 1  / (scaleResize * currentZoom);
-    });
-
+    rescaleStroke();
     createScale();
     console.log(currentZoom);
   }
@@ -295,33 +305,7 @@ function zoomOut() {
 
     zoom.scale(view.k).translate([view.x, view.y]);
     currentZoom =view.k;
-
-      //adjust the trafficZone hover stroke width based on zoom level
-      d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize *currentZoom));
-      d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize *currentZoom));
-      d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize *currentZoom));
-
-      d3.selectAll(".centroid").attr("r", function() {
-        let node = d3.select(this);
-        let ratio = node.attr("ratio");
-        let radius = 16 / (scaleResize *currentZoom) * ratio;
-        return radius;
-      });
-
-      d3.selectAll(".line-centroid").style("stroke-width", function() {
-        let node = d3.select(this);
-        let ratio = node.attr("ratio");
-        return 10 * ratio / (scaleResize *currentZoom);
-      });
-
-      d3.selectAll(".eixo").style("stroke-width", function() {
-        return 1  / (scaleResize *currentZoom);
-      });
-
-      d3.selectAll(".centroid").style("stroke-width", function() {
-        return 1  / (scaleResize *currentZoom);
-      });
-
+    rescaleStroke();
     createScale();
     console.log(currentZoom);
   }
