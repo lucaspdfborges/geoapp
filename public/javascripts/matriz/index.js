@@ -391,6 +391,9 @@ function plotMatrix(){
     }
   );
   $("#table-matriz").show();
+  if($("#hide-matriz").is(":checked")){
+    $("#hideMatrizLabel").click();
+  }
 }
 
 
@@ -419,4 +422,16 @@ function heatMapPlot(element){
             $(this).find("div").first().css("background-color", color);
           });
     }
+}
+
+function hideMatrix(){
+  $("#table-content").fadeOut("fast");
+  $("#table-matriz").css("width","4em");
+  $("#hideMatrizLabel").css("transform","rotate(180deg)");
+}
+
+function showMatrix(){
+  $("#table-content").show();
+  $("#table-matriz").css("width","100vw");
+  $("#hideMatrizLabel").css("transform","rotate(0deg)");
 }

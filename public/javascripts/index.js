@@ -141,15 +141,12 @@ $("#hide-menu").on("click",function(){
 
 $("#hide-matriz").on("change", function(){
   if($(this).is(":checked")){
-    $("#table-content").fadeOut("fast");
-    $("#table-matriz").css("width","4em");
-    $("#hideMatrizLabel").css("transform","rotate(180deg)");
-
+    hideMatrix();
   }else{
-    $("#table-content").show();
-    $("#table-matriz").css("width","100vw");
-    $("#hideMatrizLabel").css("transform","rotate(0deg)");
-
+    showMatrix();
   }
+});
 
+$("#closeMatriz").on("click",function(){
+  $("#table-matriz").fadeOut("fast");
 });

@@ -69,9 +69,7 @@ function setup(width, height) {
   g = svg.append("g")
           .attr("height","100vh");
 
-  createScale(baseScale);
-
-
+  createScale();
 }
 
 function scaleData(){
@@ -119,7 +117,7 @@ function scaleData(){
   return data
 }
 
-function createScale(value){
+function createScale(){
 
   $("#svgScale").remove();
 
@@ -189,7 +187,7 @@ function focusArea(width, height, lnCenter) {
   g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
   zoom.scale(3).translate(t);
-  createScale(baseScale/3);
+  createScale();
 }
 
 function zoomIn() {
@@ -254,7 +252,7 @@ function zoomIn() {
       return 1  / (scaleResize * currentZoom);
     });
 
-    createScale(baseScale/currentZoom);
+    createScale();
     console.log(currentZoom);
   }
 }
@@ -321,7 +319,7 @@ function zoomOut() {
         return 1  / (scaleResize *currentZoom);
       });
 
-    createScale(baseScale/currentZoom);
+    createScale();
     console.log(currentZoom);
   }
 }
@@ -707,6 +705,8 @@ function centerMap(){
 
   zoom.scale(1).translate([0,0]);
 
+  createScale();
+
   //adjust the trafficZone hover stroke width based on zoom level
   d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom) );
   d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize * currentZoom) );
@@ -779,7 +779,7 @@ function move() {
     return 1  / (scaleResize *s);
   });
 
-  createScale(baseScale/currentZoom);
+  createScale();
   console.log(currentZoom);
 }
 
