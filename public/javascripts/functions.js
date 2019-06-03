@@ -5,7 +5,7 @@
 
 var zoom = d3.behavior
 .zoom()
-.scaleExtent([1, 20])
+.scaleExtent([1, maxZoom])
 .on("zoom", move);
 
 var width = document.getElementById("container").offsetWidth;
@@ -71,28 +71,78 @@ function setup(width, height) {
 
   createScale(baseScale);
 
+
+}
+
+function scaleData(){
+  var data = {};
+
+  if(currentZoom < 1.65){
+    data["baseValue"] = 10;
+    data["rectWidth"] = 38*currentZoom;
+    data["unit"] = "km";
+  }else if(currentZoom < 2.5){
+    data["baseValue"] = 6;
+    data["rectWidth"] = 38*(currentZoom - 0.65);
+    data["unit"] = "km";
+  }else if(currentZoom < 3.33){
+    data["baseValue"] = 4;
+    data["rectWidth"] = 38*(currentZoom - 1.5);
+    data["unit"] = "km";
+  }else if(currentZoom < 4){
+    data["baseValue"] = 3000;
+    data["rectWidth"] = 38*(currentZoom - 2.33);
+    data["unit"] = "km";
+  }else if(currentZoom < 5){
+    data["baseValue"] = 2500;
+    data["rectWidth"] = 38*(currentZoom - 3);
+    data["unit"] = "km";
+  }else  if(currentZoom < 5.56){
+    data["baseValue"] = 2000;
+    data["rectWidth"] = 38*(currentZoom - 4);
+    data["unit"] = "m";
+  }else  if(currentZoom < 6.25){
+    data["baseValue"] = 1800;
+    data["rectWidth"] = 38*(currentZoom - 4.56);
+    data["unit"] = "m";
+  }else  if(currentZoom < 6.67){
+    data["baseValue"] = 1600;
+    data["rectWidth"] = 38*(currentZoom - 5.25);
+    data["unit"] = "m";
+  }else {
+    data["baseValue"] = 1500;
+    data["rectWidth"] = 38*(currentZoom - 5.67);
+    data["unit"] = "m";
+  }
+
+
+  return data
 }
 
 function createScale(value){
 
   $("#svgScale").remove();
 
-  var data = [0,  Math.round(value/3), Math.round(2*value/3),  Math.round(value)];
+  var value = scaleData().baseValue;
+
+  var data = [0,  Math.round(10*value/4)/10, Math.round(10*value/2)/10,  Math.round(10*3*value/4)/10,  Math.round(10*value)/10];
+  var rectData = [...Array(4).keys()];
+  var rectWidth = scaleData().rectWidth;
 
   svgScale = d3.select("#top-content")
                .append("svg")
-               .attr("width", 250)
+               .attr("width", 290)
                .attr("height", 30)
                .attr("id","svgScale");
 
   svgScale.selectAll('rect')
-          .data(data)
+          .data(rectData)
           .enter()
           .append('rect')
-          .attr('width', 50)
+          .attr('width', rectWidth)
           .attr('height', 10)
           .attr('x', function(d,i){
-            return 52*i;
+            return (rectWidth+2)*i + 2;
           })
           .attr('y', 15)
           .style("stroke", "#ccc")
@@ -106,7 +156,7 @@ function createScale(value){
           .append('text')
           .attr("font-size", "0.75em")
           .attr('x', function(d,i){
-            return 52*i;
+            return (rectWidth+1)*i;
           })
           .attr('y', 10)
           .text(function(d,i){
@@ -118,9 +168,9 @@ function createScale(value){
 
     svgScale.append('text')
             .attr("font-size", "0.75em")
-            .attr('x', 215)
+            .attr('x', 10+rectWidth*4)
             .attr('y', 25)
-            .text('m')
+            .text(scaleData().unit)
             .attr('fill',"#002");
 }
 
@@ -144,7 +194,6 @@ function focusArea(width, height, lnCenter) {
 
 function zoomIn() {
 
-
     var clicked = d3.event.target,
         direction = 1,
         factor = 0.1,
@@ -158,7 +207,7 @@ function zoomIn() {
 
     d3.event.preventDefault();
 
-    if(currentZoom<=17){
+    if(currentZoom<(maxZoom-factor)){
     clickZoomDelta += factor;
 
     target_zoom = zoom.scale() * (1 + factor);
@@ -178,7 +227,35 @@ function zoomIn() {
 
     zoom.scale(view.k).translate([view.x, view.y]);
     currentZoom =view.k;
+
+    //adjust the trafficZone hover stroke width based on zoom level
+    d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom));
+    d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize * currentZoom));
+    d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize * currentZoom));
+
+    d3.selectAll(".centroid").attr("r", function() {
+      let node = d3.select(this);
+      let ratio = node.attr("ratio");
+      let radius = 16 / (scaleResize * currentZoom) * ratio;
+      return radius;
+    });
+
+    d3.selectAll(".line-centroid").style("stroke-width", function() {
+      let node = d3.select(this);
+      let ratio = node.attr("ratio");
+      return 10 * ratio / (scaleResize * currentZoom);
+    });
+
+    d3.selectAll(".eixo").style("stroke-width", function() {
+      return 1  / (scaleResize * currentZoom);
+    });
+
+    d3.selectAll(".centroid").style("stroke-width", function() {
+      return 1  / (scaleResize * currentZoom);
+    });
+
     createScale(baseScale/currentZoom);
+    console.log(currentZoom);
   }
 }
 
@@ -217,7 +294,35 @@ function zoomOut() {
 
     zoom.scale(view.k).translate([view.x, view.y]);
     currentZoom =view.k;
+
+      //adjust the trafficZone hover stroke width based on zoom level
+      d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize *currentZoom));
+      d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize *currentZoom));
+      d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize *currentZoom));
+
+      d3.selectAll(".centroid").attr("r", function() {
+        let node = d3.select(this);
+        let ratio = node.attr("ratio");
+        let radius = 16 / (scaleResize *currentZoom) * ratio;
+        return radius;
+      });
+
+      d3.selectAll(".line-centroid").style("stroke-width", function() {
+        let node = d3.select(this);
+        let ratio = node.attr("ratio");
+        return 10 * ratio / (scaleResize *currentZoom);
+      });
+
+      d3.selectAll(".eixo").style("stroke-width", function() {
+        return 1  / (scaleResize *currentZoom);
+      });
+
+      d3.selectAll(".centroid").style("stroke-width", function() {
+        return 1  / (scaleResize *currentZoom);
+      });
+
     createScale(baseScale/currentZoom);
+    console.log(currentZoom);
   }
 }
 
@@ -675,6 +780,7 @@ function move() {
   });
 
   createScale(baseScale/currentZoom);
+  console.log(currentZoom);
 }
 
 //geo translation on mouse click in map

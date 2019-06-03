@@ -4,7 +4,8 @@ const rectColors = ["hsla(0, 20%, 50%,0.4)","hsla(120, 20%, 50%,0.4)","hsla(240,
 const rectColorsText = ["hsla(0, 20%, 20%, 1)","hsla(120, 20%, 20%, 1)","hsla(240, 20%, 20%, 1)"];
 
 const rectText = ["COLETIVO","INDIVIDUAL"];
-const baseScale = 13174;
+const baseScale = 10;
+const maxZoom = 7;
 const listColors = [["hsla(340, 35%, 55%, 0.95)", "hsla(380, 35%, 55%, 0.95)"],["hsla(220, 30%, 60%, 0.95)", "hsla(170, 30%, 60%, 0.95)"],["hsla(230, 35%, 55%, 0.95)", "hsla(310, 35%, 55%, 0.95)"],["#FFF", "#DDD"]]
 
 // Paths for json files
