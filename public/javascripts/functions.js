@@ -9,6 +9,7 @@ var zoom = d3.behavior
 .on("zoom", move);
 
 var width = document.getElementById("container").offsetWidth;
+console.log(width);
 var height = width * 0.55;
 
 var lastPlot = "none";
@@ -75,41 +76,43 @@ function setup(width, height) {
 function scaleData(){
   var data = {};
 
+  var scaleCorrection = document.getElementById("container").offsetWidth/1853;
+
   if(currentZoom < 1.65){
     data["baseValue"] = 10;
-    data["rectWidth"] = 38*currentZoom;
+    data["rectWidth"] = 38*currentZoom*scaleCorrection;
     data["unit"] = "km";
   }else if(currentZoom < 2.5){
     data["baseValue"] = 6;
-    data["rectWidth"] = 38*(currentZoom - 0.65);
+    data["rectWidth"] = 38*(currentZoom - 0.65)*scaleCorrection;
     data["unit"] = "km";
   }else if(currentZoom < 3.33){
     data["baseValue"] = 4;
-    data["rectWidth"] = 38*(currentZoom - 1.5);
+    data["rectWidth"] = 38*(currentZoom - 1.5)*scaleCorrection;
     data["unit"] = "km";
   }else if(currentZoom < 4){
     data["baseValue"] = 3000;
-    data["rectWidth"] = 38*(currentZoom - 2.33);
+    data["rectWidth"] = 38*(currentZoom - 2.33)*scaleCorrection;
     data["unit"] = "km";
   }else if(currentZoom < 5){
     data["baseValue"] = 2500;
-    data["rectWidth"] = 38*(currentZoom - 3);
+    data["rectWidth"] = 38*(currentZoom - 3)*scaleCorrection;
     data["unit"] = "km";
   }else  if(currentZoom < 5.56){
     data["baseValue"] = 2000;
-    data["rectWidth"] = 38*(currentZoom - 4);
+    data["rectWidth"] = 38*(currentZoom - 4)*scaleCorrection;
     data["unit"] = "m";
   }else  if(currentZoom < 6.25){
     data["baseValue"] = 1800;
-    data["rectWidth"] = 38*(currentZoom - 4.56);
+    data["rectWidth"] = 38*(currentZoom - 4.56)*scaleCorrection;
     data["unit"] = "m";
   }else  if(currentZoom < 6.67){
     data["baseValue"] = 1600;
-    data["rectWidth"] = 38*(currentZoom - 5.25);
+    data["rectWidth"] = 38*(currentZoom - 5.25)*scaleCorrection;
     data["unit"] = "m";
   }else {
     data["baseValue"] = 1500;
-    data["rectWidth"] = 38*(currentZoom - 5.67);
+    data["rectWidth"] = 38*(currentZoom - 5.67)*scaleCorrection;
     data["unit"] = "m";
   }
 
@@ -1042,6 +1045,8 @@ function responsivefy(svg) {
       d3.selectAll(".eixo").style("stroke-width", function() {
         return 1/(scaleResize * currentZoom);
       });
+
+      createScale();
 
 
   }

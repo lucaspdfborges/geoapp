@@ -21,6 +21,7 @@ function selectAsOrigin(node){
     if(nextBlock.is(":hidden")){
       nextBlock.fadeTo(200, 1.0);
       nextBlock.show();
+      $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
     }
 }
 
@@ -45,6 +46,7 @@ function selectAsDestiny(node){
     if(nextBlock.is(":hidden")){
       nextBlock.fadeTo(200, 1.0);
       nextBlock.show();
+      $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
     }
 
 }

@@ -129,13 +129,11 @@ $("#interesseBox input").on("change",function(){
   }
 });
 
-$("#hide-menu").on("click",function(){
-  if($(this).is(":checked")){
-    $("#hideMenuLabel").css("color","#202127");
-    $(".grid-wrappers").first().fadeOut("fast");
+$("#hideMenu").on("click",function(){
+  if($(".grid-wrappers").is(":hidden")){
+      $(".grid-wrappers").first().show();
   }else{
-    $("#hideMenuLabel").css("color","#aaa");
-    $(".grid-wrappers").first().show();
+    $(".grid-wrappers").first().fadeOut("fast");
   }
 });
 
