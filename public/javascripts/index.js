@@ -70,6 +70,10 @@ $("#downloadOD").click(function() {
 
 $("#interestBtn").click(function() {
   interestPlot();
+  if(width<800){
+    $(".grid-wrappers").first().fadeOut("fast");
+    $("#container-wrapper").show();
+  }
 });
 
 $("#selectedBtn").click(function() {
@@ -123,10 +127,24 @@ $("#indicadoresBox input").on("change",function(){
   indicadoresInputClick();
 });
 
+$("#indicadoresBox button").on("click", function(){
+  if(width<800){
+    $(".grid-wrappers").first().fadeOut("fast");
+    $("#container-wrapper").show();
+  }
+});
+
 $("#interesseBox input").on("change",function(){
+
   if(lastPlot=="interest"){
     interestPlot();
   }
+
+ if($(this).attr("id") == "originEsp" || $(this).attr("id") == "destEsp"){
+   var nextBlock = $("#zona-block");
+   $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
+ }
+
 });
 
 $("#hideMenu").on("click",function(){

@@ -9,7 +9,6 @@ var zoom = d3.behavior
 .on("zoom", move);
 
 var width = document.getElementById("container").offsetWidth;
-console.log(width);
 var height = width * 0.55;
 
 var lastPlot = "none";
@@ -218,11 +217,30 @@ function createScale(){
                    .attr("height", 30)
                    .attr("id","svgScale");
 
-      svgScale.append('rect')
-              .attr('width', 4*rectWidth)
+      svgScale.append('line')
               .attr('height', 10)
-              .attr('x', 5)
-              .attr('y', 15)
+              .attr('x1', 5)
+              .attr('x2', 4*rectWidth)
+              .attr('y1', 18)
+              .attr('y2', 18)
+              .style("stroke", "#335")
+              .attr('fill', "white");
+
+      svgScale.append('line')
+              .attr('height', 10)
+              .attr('x1', 5)
+              .attr('x2', 5)
+              .attr('y1', 15)
+              .attr('y2', 18)
+              .style("stroke", "#335")
+              .attr('fill', "white");
+
+      svgScale.append('line')
+              .attr('height', 10)
+              .attr('x1', 4*rectWidth)
+              .attr('x2', 4*rectWidth)
+              .attr('y1', 15)
+              .attr('y2', 18)
               .style("stroke", "#335")
               .attr('fill', "white");
 
@@ -261,7 +279,6 @@ function focusArea(width, height, lnCenter) {
 }
 
 function rescaleStroke(){
-  console.log('rescale factor:',scaleResize *currentZoom);
 
   //adjust the trafficZone hover stroke width based on zoom level
   d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize *currentZoom));
@@ -329,7 +346,6 @@ function zoomIn() {
     currentZoom =view.k;
     rescaleStroke();
     createScale();
-    console.log(currentZoom);
   }
 }
 
@@ -370,7 +386,6 @@ function zoomOut() {
     currentZoom =view.k;
     rescaleStroke();
     createScale();
-    console.log(currentZoom);
   }
 }
 
@@ -440,7 +455,6 @@ function loadedJSONs(error, results){
    destinyOD = results[6];
    nomeIdZonaCenter = results[7];
    idRa = results[8];
-   console.log("idRa",idRa);
 
    ambiente(ambienteTopo);
    mancha(manchaTopo);
@@ -449,7 +463,7 @@ function loadedJSONs(error, results){
    lagos(lagosTopo);
    generateZoneLists(nomeIdZonaCenter);
 
-   if(width<800){     
+   if(width<800){
      rescaleStroke();
    }
 }
@@ -805,7 +819,6 @@ function move() {
   );
 
   zoom.translate(t);
-  console.log('translate: ',t,' | zoom: ',s);
   g.attr("transform", "translate(" + t + ") scale(" + s + ")");
 
   //adjust the trafficZone hover stroke width based on zoom level
@@ -835,7 +848,6 @@ function move() {
   });
 
   createScale();
-  console.log(currentZoom);
 }
 
 //geo translation on mouse click in map

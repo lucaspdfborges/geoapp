@@ -29,8 +29,10 @@ function selectAsZone(node){
       node.attr("clicked", 1);
 
    var nextBlock = $("#dv-rep");
+   //implment scroll To
       nextBlock.fadeTo(200, 1.0);
       nextBlock.show();
+      $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
   }
 }
 

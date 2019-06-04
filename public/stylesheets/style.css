@@ -51,8 +51,9 @@ p.tooltipMunicipio {
   color: #99A;
   font-size: 1.5em;
   background-color: white;
-  z-index: 16;
+  z-index: 17;
   padding:0.25em;
+  margin-top: 0;
   position: fixed;
   left: 0;
 }
@@ -954,7 +955,7 @@ button#clear-map:hover {
   }
 
   #table-matriz{
-    z-index:17;
+    z-index:18;
   }
 
   #ODtitle{
