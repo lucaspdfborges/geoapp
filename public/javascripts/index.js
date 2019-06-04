@@ -125,6 +125,12 @@ $("#destino-todos").on("change", function(){
 
 $("#indicadoresBox input").on("change",function(){
   indicadoresInputClick();
+
+  if($(this).attr("id") == "horapicoInd" || $(this).attr("id") == "totalInd"){
+    var nextBlock = $("#indicadoresBox").find(".container-block").last();
+    $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
+  }
+
 });
 
 $("#indicadoresBox button").on("click", function(){
