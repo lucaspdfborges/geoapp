@@ -169,7 +169,7 @@ function createScale(){
 
     svgScale.append('text')
             .attr("font-size", "0.75em")
-            .attr('x', 10+rectWidth*4)
+            .attr('x', 15+rectWidth*4)
             .attr('y', 25)
             .text(scaleData().unit)
             .attr('fill',"#002");

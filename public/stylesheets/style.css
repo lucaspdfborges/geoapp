@@ -974,7 +974,19 @@ button#clear-map:hover {
     padding: 0;
   }
 
+  #clear-map, #search-wrapper{
+    display: none;
+  }
+
+  #top-content{
+    margin-top: 0;
+  }
+
   #title {
+    display: none;
+  }
+
+  #tooltip{
     display: none;
   }
 
@@ -993,6 +1005,7 @@ button#clear-map:hover {
 div.grid-wrappers {
     width: 100vw;
     color: #557;
+    display: none;
   }
 
   #panelAndMap {
@@ -1031,11 +1044,7 @@ div.grid-wrappers {
   }
 
   #container-legend {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top: 5vh;
-    z-index: 8;
+    display: none;
   }
 
   #mode-distribution {
