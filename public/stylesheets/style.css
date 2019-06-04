@@ -1014,6 +1014,9 @@ div.grid-wrappers {
     width: 100vw;
     color: #557;
     display: none;
+    margin-top: 0;
+    padding-top: 2em;
+    max-height: none;
   }
 
   #panelAndMap {

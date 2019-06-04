@@ -132,8 +132,14 @@ $("#interesseBox input").on("change",function(){
 $("#hideMenu").on("click",function(){
   if($(".grid-wrappers").is(":hidden")){
       $(".grid-wrappers").first().show();
+      if(width<800){
+        $("#container-wrapper").hide();
+      }
   }else{
     $(".grid-wrappers").first().fadeOut("fast");
+    if(width<800){
+      $("#container-wrapper").show();
+    }
   }
 });
 
