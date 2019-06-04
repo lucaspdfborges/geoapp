@@ -121,6 +121,8 @@ function scaleData(){
 
 function createScale(){
 
+  var width = document.getElementById("container").offsetWidth;
+
   $("#svgScale").remove();
 
   var value = scaleData().baseValue;
@@ -129,50 +131,76 @@ function createScale(){
   var rectData = [...Array(4).keys()];
   var rectWidth = scaleData().rectWidth;
 
-  svgScale = d3.select("#top-content")
-               .append("svg")
-               .attr("width", 290)
-               .attr("height", 30)
-               .attr("id","svgScale");
+  if(width > 800){
 
-  svgScale.selectAll('rect')
-          .data(rectData)
-          .enter()
-          .append('rect')
-          .attr('width', rectWidth)
-          .attr('height', 10)
-          .attr('x', function(d,i){
-            return (rectWidth+2)*i + 5;
-          })
-          .attr('y', 15)
-          .style("stroke", "#ccc")
-          .attr('fill',function(d,i){
-            return (i%2 >0 ? "#fcfcff" : "#335");
-          });
+    svgScale = d3.select("#top-content")
+                 .append("svg")
+                 .attr("width", 290)
+                 .attr("height", 30)
+                 .attr("id","svgScale");
 
-  svgScale.selectAll('text')
-          .data(data)
-          .enter()
-          .append('text')
-          .attr("font-size", "0.75em")
-          .attr('x', function(d,i){
-            var backshift = 2*(d.toString().length - 1);
-            return (rectWidth+2)*i - backshift;
-          })
-          .attr('y', 10)
-          .text(function(d,i){
-            return d;
-          })
-          .attr('fill',function(d,i){
-            return (i%2 >0 ? "#557" : "#002");
-          });
+    svgScale.selectAll('rect')
+            .data(rectData)
+            .enter()
+            .append('rect')
+            .attr('width', rectWidth)
+            .attr('height', 10)
+            .attr('x', function(d,i){
+              return (rectWidth+2)*i + 5;
+            })
+            .attr('y', 15)
+            .style("stroke", "#ccc")
+            .attr('fill',function(d,i){
+              return (i%2 >0 ? "#fcfcff" : "#335");
+            });
 
-    svgScale.append('text')
+    svgScale.selectAll('text')
+            .data(data)
+            .enter()
+            .append('text')
             .attr("font-size", "0.75em")
-            .attr('x', 15+rectWidth*4)
-            .attr('y', 25)
-            .text(scaleData().unit)
-            .attr('fill',"#002");
+            .attr('x', function(d,i){
+              var backshift = 2*(d.toString().length - 1);
+              return (rectWidth+2)*i - backshift;
+            })
+            .attr('y', 10)
+            .text(function(d,i){
+              return d;
+            })
+            .attr('fill',function(d,i){
+              return (i%2 >0 ? "#557" : "#002");
+            });
+
+      svgScale.append('text')
+              .attr("font-size", "0.75em")
+              .attr('x', 15+rectWidth*4)
+              .attr('y', 25)
+              .text(scaleData().unit)
+              .attr('fill',"#002");
+    }else{
+
+      svgScale = d3.select("#top-content")
+                   .append("svg")
+                   .attr("width", 100)
+                   .attr("height", 30)
+                   .attr("id","svgScale");
+
+      svgScale.append('rect')
+              .attr('width', 4*rectWidth)
+              .attr('height', 10)
+              .attr('x', 5)
+              .attr('y', 15)
+              .style("stroke", "#335")
+              .attr('fill', "white");
+
+      svgScale.append('text')
+              .attr("font-size", "0.75em")
+              .attr('x', 5 )
+              .attr('y', 10)
+              .text(value + " " + scaleData().unit)
+              .attr('fill', "#002");
+
+    }
 }
 
 
