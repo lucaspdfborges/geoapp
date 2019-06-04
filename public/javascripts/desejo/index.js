@@ -240,7 +240,7 @@ function interestCentroids(mz, data, max, coords, ratios, baseColor){
     })
     .style("stroke-width", function(d,i){
         if(mz == d.destiny){
-               return 1;
+               return 1/currentZoom;
             }
     })
     .attr("ratio", function(d,i) {
@@ -343,7 +343,9 @@ function interestPlot(){
           }
 
           legendCircle(colorGrad, max, "N° de viagens");
-          zoneLegend(mzName, val1, val2);
+          if(width>800){
+            zoneLegend(mzName, val1, val2);
+          }
 
         });
       }

@@ -50,6 +50,17 @@ Functions
 
 function setup(width, height) {
 
+  var translateX, translateY, zoomScale;
+
+  translateX = 33.95 * width;
+  translateY = -19.8* height;
+  zoomScale = 40*width;
+
+  projection = d3.geo
+  .mercator()
+  .translate([translateX, translateY])
+  .scale(zoomScale);
+
   projection = d3.geo
   .mercator()
   .translate([33.95 * width, - 19.8* height])
@@ -71,6 +82,28 @@ function setup(width, height) {
           .attr("height","100vh");
 
   createScale();
+
+  if(width<800){
+
+      var s =4;
+
+      var kx = 0; // 2;
+      var ky = 0;
+
+      var lx = 0.995;
+      var ly = 1;
+
+      var tx = -1.5*width;
+      var ty = -1.5*height;
+
+      var t = [tx, ty];
+      g = d3.select("#container g");
+      g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+      zoom.scale(s).translate(t);
+      scaleResize = 1;
+      currentZoom = s;
+  }
 }
 
 function scaleData(){
@@ -228,32 +261,34 @@ function focusArea(width, height, lnCenter) {
 }
 
 function rescaleStroke(){
+  console.log('rescale factor:',scaleResize *currentZoom);
 
-      //adjust the trafficZone hover stroke width based on zoom level
-      d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom));
-      d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize * currentZoom));
-      d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize * currentZoom));
+  //adjust the trafficZone hover stroke width based on zoom level
+  d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize *currentZoom));
+  d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize *currentZoom));
+  d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize *currentZoom));
 
-      d3.selectAll(".centroid").attr("r", function() {
-        let node = d3.select(this);
-        let ratio = node.attr("ratio");
-        let radius = 16 / (scaleResize * currentZoom) * ratio;
-        return radius;
-      });
+  d3.selectAll(".centroid").attr("r", function() {
+    let node = d3.select(this);
+    let ratio = node.attr("ratio");
+    let radius = 16 / (scaleResize *currentZoom) * ratio;
+    return radius;
+  });
 
-      d3.selectAll(".line-centroid").style("stroke-width", function() {
-        let node = d3.select(this);
-        let ratio = node.attr("ratio");
-        return 10 * ratio / (scaleResize * currentZoom);
-      });
+  d3.selectAll(".line-centroid").style("stroke-width", function() {
+    let node = d3.select(this);
+    let ratio = node.attr("ratio");
+    return 10 * ratio / (scaleResize *currentZoom);
+  });
 
-      d3.selectAll(".eixo").style("stroke-width", function() {
-        return 1  / (scaleResize * currentZoom);
-      });
+  d3.selectAll(".eixo").style("stroke-width", function() {
+    return 1  / (scaleResize *currentZoom);
+  });
 
-      d3.selectAll(".centroid").style("stroke-width", function() {
-        return 1  / (scaleResize * currentZoom);
-      });
+  d3.selectAll(".centroid").style("stroke-width", function() {
+    return 1  / (scaleResize *currentZoom);
+  });
+
 }
 
 
@@ -413,6 +448,10 @@ function loadedJSONs(error, results){
    draw(topo);
    lagos(lagosTopo);
    generateZoneLists(nomeIdZonaCenter);
+
+   if(width<800){     
+     rescaleStroke();
+   }
 }
 
 function generateSearchList(jsonFile){
@@ -766,6 +805,7 @@ function move() {
   );
 
   zoom.translate(t);
+  console.log('translate: ',t,' | zoom: ',s);
   g.attr("transform", "translate(" + t + ") scale(" + s + ")");
 
   //adjust the trafficZone hover stroke width based on zoom level

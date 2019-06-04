@@ -941,6 +941,10 @@ button#clear-map:hover {
     margin-left: 0;
   }
 
+  #container-legend svg{
+    z-index: 16;
+  }
+
   #clear-map, #search-wrapper{
     display: none;
   }

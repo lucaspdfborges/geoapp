@@ -117,7 +117,6 @@ function legendStroke(colorArray, max, title){
     .attr("y", 15)
     .text(title)
     .style("fill","#333");
-
 }
 
 function zoneLegend(zoneName, val1, val2){
