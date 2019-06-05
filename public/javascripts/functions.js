@@ -51,19 +51,18 @@ function setup(width, height) {
 
   var translateX, translateY, zoomScale;
 
-  translateX = 33.95 * width;
-  translateY = -19.8* height;
-  zoomScale = 40*width;
+  translateX = 39.75 * width;
+  translateY = -23.3* height;
+  zoomScale = 47*width;
+
+  // translateX = 33.95 * width;
+  // translateY = -19.8* height;
+  // zoomScale = 40*width;
 
   projection = d3.geo
   .mercator()
   .translate([translateX, translateY])
   .scale(zoomScale);
-
-  projection = d3.geo
-  .mercator()
-  .translate([33.95 * width, - 19.8* height])
-  .scale(40 * width);
 
   path = d3.geo.path().projection(projection);
 

@@ -913,11 +913,6 @@ button#clear-map:hover {
 /* AT MEDIA */
 
 @media only screen and (max-width: 1200px) {
-  #top-content{
-      justify-content: end;
-  }
-
-
 
   #hide-menu {
     display: block;
