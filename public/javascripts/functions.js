@@ -51,7 +51,7 @@ function setup(width, height) {
 
   var translateX, translateY, zoomScale;
 
-  translateX = 39.75 * width;
+  translateX = 39.78 * width;
   translateY = -23.3* height;
   zoomScale = 47*width;
 
@@ -92,7 +92,7 @@ function setup(width, height) {
       var ly = 1;
 
       var tx = -1.5*width;
-      var ty = -1.5*height;
+      var ty = -1.55*height;
 
       var t = [tx, ty];
       g = d3.select("#container g");
@@ -465,6 +465,8 @@ function loadedJSONs(error, results){
    if(width<800){
      rescaleStroke();
    }
+
+   $("#loader").remove();
 }
 
 function generateSearchList(jsonFile){
@@ -800,6 +802,19 @@ function centerMap(){
     return 1  / (scaleResize * currentZoom) ;
   });
 
+}
+
+function dragstarted(d) {
+  d3.event.sourceEvent.stopPropagation();
+  d3.select(this).classed("dragging", true);
+}
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+function dragended(d) {
+  d3.select(this).classed("dragging", false);
 }
 
 function move() {
