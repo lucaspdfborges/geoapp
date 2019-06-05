@@ -7,6 +7,12 @@ var zoom = d3.zoom()
 .scaleExtent([1, maxZoom])
 .on("zoom", zoomed);
 
+var drag = d3.drag()
+           .subject(function (d) { return d; })
+           .on("start", dragstarted)
+           .on("drag", dragged)
+           .on("end", dragended);
+
 var width = document.getElementById("container").offsetWidth;
 var height = width * 0.55;
 
@@ -247,10 +253,8 @@ function createScale(){
               .attr('y', 10)
               .text(value + " " + scaleData().unit)
               .attr('fill', "#002");
-
     }
 }
-
 
 function focusArea(width, height, d) {
 
@@ -259,52 +263,20 @@ function focusArea(width, height, d) {
 
   bounds = [projection([bbox[0],bbox[1]]), projection([bbox[2],bbox[3]])];
 
-  var zCenter = projection(lnCenter);
-  var mCenter = projection(mapCenter);
+  var dx = bounds[1][0] - bounds[0][0],
+       dy = bounds[1][1] - bounds[0][1],
+       x = (bounds[0][0] + bounds[1][0]) / 2,
+       y = (bounds[0][1] + bounds[1][1]) / 2,
+       scale = Math.max(1, Math.min(8, 0.85 / Math.max(dx / width, dy / height))),
+       translate = [width / 2 - scale * x, height / 2 - scale * y];
 
-  var scale = 2;
+  svg.transition()
+      .duration(750)
+      .call(zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale));
 
-  var tx = zCenter[0] - mCenter[0],
-      ty = zCenter[1] - mCenter[1];
-
-
-var dx = bounds[1][0] - bounds[0][0],
-     dy = bounds[1][1] - bounds[0][1],
-     x = (bounds[0][0] + bounds[1][0]) / 2,
-     y = (bounds[0][1] + bounds[1][1]) / 2,
-     scale = Math.max(1, Math.min(8, 0.85 / Math.max(dx / width, dy / height))),
-     translate = [width / 2 - scale * x, height / 2 - scale * y];
-
-
-svg.transition()
-    .duration(750)
-    .call(zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale));
-
-  // currentZoom =1;
-  // rescaleStroke();
-  // createScale();
-
-  /*
-
-  var s =3;
-
-  var kx = 2; // 2;
-  var ky = -4;
-
-  var lx = 0.995;
-  var ly = 1;
-
-  var tx = -width*(1 - 0.5/s - kx*(mapCenter[0] - lx*lnCenter[0]));
-  var ty = -height*(1 - 0.5/s - ky*(mapCenter[1] - ly*lnCenter[1]));
-
-  var t = [tx, ty];
-  g = d3.select("#container g");
-  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
-
-  zoom.scale(3).translate(t);
-  currentZoom = 3;
-  */
-
+  currentZoom = scale;
+  rescaleStroke();
+  createScale();
 }
 
 function rescaleStroke(){
@@ -334,7 +306,6 @@ function rescaleStroke(){
   d3.selectAll(".centroid").style("stroke-width", function() {
     return 1  / (scaleResize *currentZoom);
   });
-
 }
 
 function zoomButtons(){
@@ -722,16 +693,16 @@ function centerMap(){
 }
 
 function dragstarted(d) {
-  d3.event.sourceEvent.stopPropagation();
-  d3.select(this).classed("dragging", true);
-}
+           d3.event.sourceEvent.stopPropagation();
+           d3.select(this).classed("dragging", true);
+       }
 
 function dragged(d) {
-  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+   d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
 }
 
 function dragended(d) {
-  d3.select(this).classed("dragging", false);
+   d3.select(this).classed("dragging", false);
 }
 
 function zoomed() {
