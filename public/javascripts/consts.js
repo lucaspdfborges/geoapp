@@ -24,6 +24,10 @@ const macrozonaOdURL = "https://raw.githubusercontent.com/lucaspdfborges/geojson
 const idRaURL = "https://raw.githubusercontent.com/lucaspdfborges/geojson/master/support/ID_RA.json";
 
 const mapCenter = [-47.797089, -15.77526];
+const mapBbox =  [ -48.285791, -16.050265, -47.308387, -15.500255 ];
+const mapWidth = mapBbox[2] - mapBbox[0];
+const mapHeight = mapBbox[3] - mapBbox[1];
+
 
 const offsetL =  5;
 const offsetT =  5;

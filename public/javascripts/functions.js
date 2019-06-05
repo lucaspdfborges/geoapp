@@ -252,7 +252,39 @@ function createScale(){
 }
 
 
-function focusArea(width, height, lnCenter) {
+function focusArea(width, height, d) {
+
+  var lnCenter = d.center;
+  var bbox = d.bbox;
+
+  bounds = [projection([bbox[0],bbox[1]]), projection([bbox[2],bbox[3]])];
+
+  var zCenter = projection(lnCenter);
+  var mCenter = projection(mapCenter);
+
+  var scale = 2;
+
+  var tx = zCenter[0] - mCenter[0],
+      ty = zCenter[1] - mCenter[1];
+
+
+var dx = bounds[1][0] - bounds[0][0],
+     dy = bounds[1][1] - bounds[0][1],
+     x = (bounds[0][0] + bounds[1][0]) / 2,
+     y = (bounds[0][1] + bounds[1][1]) / 2,
+     scale = Math.max(1, Math.min(8, 0.85 / Math.max(dx / width, dy / height))),
+     translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+
+svg.transition()
+    .duration(750)
+    .call(zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale));
+
+  // currentZoom =1;
+  // rescaleStroke();
+  // createScale();
+
+  /*
 
   var s =3;
 
@@ -271,8 +303,8 @@ function focusArea(width, height, lnCenter) {
 
   zoom.scale(3).translate(t);
   currentZoom = 3;
-  rescaleStroke();
-  createScale();
+  */
+
 }
 
 function rescaleStroke(){
@@ -420,7 +452,7 @@ function generateSearchList(jsonFile){
 
           width = document.getElementById("container").offsetWidth;
           height = width * 0.55;
-          focusArea(width, height, d.center);
+          focusArea(width, height, d);
 
           d3.selectAll(".eixo").style("stroke-width", 0.3);
 
