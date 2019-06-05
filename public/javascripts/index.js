@@ -1,5 +1,5 @@
 
-var graticule = d3.geo.graticule();
+var graticule = d3.geoGraticule();
 
 var tooltip = d3
 .select("#container")

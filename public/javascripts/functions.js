@@ -3,10 +3,9 @@
   Variables
 */
 
-var zoom = d3.behavior
-.zoom()
+var zoom = d3.zoom()
 .scaleExtent([1, maxZoom])
-.on("zoom", move);
+.on("zoom", zoomed);
 
 var width = document.getElementById("container").offsetWidth;
 var height = width * 0.55;
@@ -59,12 +58,11 @@ function setup(width, height) {
   // translateY = -19.8* height;
   // zoomScale = 40*width;
 
-  projection = d3.geo
-  .mercator()
+  projection = d3.geoMercator()
   .translate([translateX, translateY])
   .scale(zoomScale);
 
-  path = d3.geo.path().projection(projection);
+  path = d3.geoPath().projection(projection);
 
   svg = d3
   .select("#container")
@@ -81,7 +79,7 @@ function setup(width, height) {
 
   createScale();
 
-  if(width<800){
+  if(width<1200){
 
       var s =4;
 
@@ -98,7 +96,7 @@ function setup(width, height) {
       g = d3.select("#container g");
       g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
-      zoom.scale(s).translate(t);
+      d3.zoomIdentity.scale(s).translate(t);
       scaleResize = 1;
       currentZoom = s;
   }
@@ -307,87 +305,6 @@ function rescaleStroke(){
 
 }
 
-
-function zoomIn() {
-
-    var clicked = d3.event.target,
-        direction = 1,
-        factor = 0.1,
-        target_zoom = 1,
-        center = [width / 2, height / 2],
-        extent = zoom.scaleExtent(),
-        translate = zoom.translate(),
-        translate0 = [],
-        l = [],
-        view = {x: translate[0], y: translate[1], k: zoom.scale()};
-
-    d3.event.preventDefault();
-
-    if(currentZoom<(maxZoom-factor)){
-    clickZoomDelta += factor;
-
-    target_zoom = zoom.scale() * (1 + factor);
-
-    translate0 = [(center[0] - view.x) / view.k, (center[1] - view.y) / view.k];
-    view.k = target_zoom;
-    l = [translate0[0] * view.k + view.x, translate0[1] * view.k + view.y];
-
-    view.x += center[0] - l[0];
-    view.y += center[1] - l[1];
-
-    g = d3.select("#container g");
-    g.attr("transform",
-        "translate(" + [view.x, view.y] + ")" +
-        "scale(" + view.k + ")"
-    );
-
-    zoom.scale(view.k).translate([view.x, view.y]);
-    currentZoom =view.k;
-    rescaleStroke();
-    createScale();
-  }
-}
-
-function zoomOut() {
-
-    var clicked = d3.event.target,
-        direction = 1,
-        factor = 0.1,
-        target_zoom = 1,
-        center = [width / 2, height / 2],
-        extent = zoom.scaleExtent(),
-        translate = zoom.translate(),
-        translate0 = [],
-        l = [],
-        view = {x: translate[0], y: translate[1], k: zoom.scale()};
-
-    d3.event.preventDefault();
-
-    if(currentZoom>=1.1){
-    clickZoomDelta += factor;
-
-    target_zoom = zoom.scale() * (1 - factor);
-
-    translate0 = [(center[0] - view.x) / view.k, (center[1] - view.y) / view.k];
-    view.k = target_zoom;
-    l = [translate0[0] * view.k + view.x, translate0[1] * view.k + view.y];
-
-    view.x += center[0] - l[0];
-    view.y += center[1] - l[1];
-
-    g = d3.select("#container g");
-    g.attr("transform",
-        "translate(" + [view.x, view.y] + ")" +
-        "scale(" + view.k + ")"
-    );
-
-    zoom.scale(view.k).translate([view.x, view.y]);
-    currentZoom =view.k;
-    rescaleStroke();
-    createScale();
-  }
-}
-
 function zoomButtons(){
 
   d3.select("#clear-map")
@@ -395,7 +312,9 @@ function zoomButtons(){
   .attr("id","zoomin")
   .attr("class","reverse-colors")
   .attr("title","Zoom In")
-  .on('click', zoomIn)
+  .on('click', function(){
+    zoom.scaleBy(svg.transition().duration(250), 1.1);
+  })
   .append("i")
   .attr("class","fas fa-plus");
 
@@ -404,7 +323,9 @@ function zoomButtons(){
   .attr("id","zoomout")
   .attr("title","Zoom Out")
   .attr("class","reverse-colors")
-  .on('click', zoomOut)
+  .on('click', function(){
+    zoom.scaleBy(svg.transition().duration(250), 0.9);
+  })
   .append("i")
   .attr("class","fas fa-minus");
 }
@@ -462,7 +383,7 @@ function loadedJSONs(error, results){
    lagos(lagosTopo);
    generateZoneLists(nomeIdZonaCenter);
 
-   if(width<800){
+   if(width<1200){
      rescaleStroke();
    }
 
@@ -759,49 +680,13 @@ function draw(topo) {
 
 function centerMap(){
 
-  var s =1;
-  var tx = 0;
-  var ty = 0;
-
-  currentZoom = 1;
-  scaleZoom = 1/currentZoom;
-
-  var t = [tx, ty];
-
-  g = d3.select("#container g");
-
-  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
-
-  zoom.scale(1).translate([0,0]);
-
+  svg.transition()
+      .duration(500)
+      .call(zoom.transform, d3.zoomIdentity);
+  //console.log("currentTransform",currentTransform);
+  currentZoom =1;
+  rescaleStroke();
   createScale();
-
-  //adjust the trafficZone hover stroke width based on zoom level
-  d3.selectAll(".macrozona").style("stroke-width", 2 / (scaleResize * currentZoom) );
-  d3.selectAll(".verde").style("stroke-width", 1.5 / (scaleResize * currentZoom) );
-  d3.selectAll(".lagos").style("stroke-width", 1.5 / (scaleResize * currentZoom) );
-
-  d3.selectAll(".centroid").attr("r", function() {
-    let node = d3.select(this);
-    let ratio = node.attr("ratio");
-    let radius = 16 /(scaleResize * currentZoom)  * ratio;
-    return radius;
-  });
-
-  d3.selectAll(".line-centroid").style("stroke-width", function() {
-    let node = d3.select(this);
-    let ratio = node.attr("ratio");
-    return 10 * ratio / s;
-  });
-
-  d3.selectAll(".eixo").style("stroke-width", function() {
-    return 1  / (scaleResize * currentZoom) ;
-  });
-
-  d3.selectAll(".centroid").style("stroke-width", function() {
-    return 1  / (scaleResize * currentZoom) ;
-  });
-
 }
 
 function dragstarted(d) {
@@ -815,6 +700,15 @@ function dragged(d) {
 
 function dragended(d) {
   d3.select(this).classed("dragging", false);
+}
+
+function zoomed() {
+         const currentTransform = d3.event.transform;
+         g.attr("transform", currentTransform);
+         //console.log("currentTransform",currentTransform);
+         currentZoom =currentTransform.k;
+         rescaleStroke();
+         createScale();
 }
 
 function move() {

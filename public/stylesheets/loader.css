@@ -2,13 +2,13 @@
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #779;
-  width: 120px;
-  height: 120px;
+  width: 10vw;
+  height: 10vw;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
   position: fixed;
-  bottom: 50%;
-  right: 50%;
+  bottom: 45vh;
+  right: 45vw;
 }
 
 /* Safari */
