@@ -1066,6 +1066,13 @@ div.grid-wrappers {
   #mode-distribution {
     display: none;
   }
+
+  #svgScale{
+    position: fixed;
+    right: 0;
+    top: 0;
+    margin: 1em 1em 0 0;
+  }
 }
 
 #origem-block{
