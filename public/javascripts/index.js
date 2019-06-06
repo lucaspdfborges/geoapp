@@ -62,6 +62,9 @@ $("#flowODBtn").click(function() {
 
 $(".resetBtn").click(function() {
   clearAll();
+  if(width<800){
+    $(this).hide();
+  }
 });
 
 $("#downloadOD").click(function() {
@@ -83,7 +86,6 @@ $("#selectedBtn").click(function() {
 $(".container-title").on("click",function(){
     containerTitleClick($(this));
 });
-
 
 document.querySelector(".table-scroll").addEventListener("scroll", function(e) {
   this.querySelector(".thead-col").style.left = this.scrollLeft + "px";
@@ -177,4 +179,19 @@ $("#hide-matriz").on("change", function(){
 
 $("#closeMatriz").on("click",function(){
   $("#table-matriz").fadeOut("fast");
+  if(width<800){
+    $(".grid-wrappers").first().show();
+  }
 });
+
+$("#container-legend").on("click", function(){
+  if(width<800 &&   $("#container-legend svg").length > 1){
+    $("#container-legend svg").each(function(){
+      if($(this).css('display') == 'none'){
+        $(this).show();
+      }else{
+        $(this).hide();
+      }
+    });
+  }
+})

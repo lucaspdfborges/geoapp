@@ -359,4 +359,8 @@ function interestPlot(){
   isPlottingInterest = false;
 
  }
+
+ if(width<800){
+   $(".resetBtn").first().show();
+ }
 }

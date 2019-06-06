@@ -23,6 +23,10 @@ function selectAsOrigin(node){
       nextBlock.show();
       $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
     }
+
+    if(width<800){
+      $(".resetBtn").first().show();
+    }
 }
 
 function selectAsDestiny(node){
@@ -49,6 +53,9 @@ function selectAsDestiny(node){
       $(nextBlock)[0].scrollIntoView({ block: 'end', behavior: 'smooth' });
     }
 
+    if(width<800){
+      $(".resetBtn").first().show();
+    }
 }
 
 
@@ -393,6 +400,11 @@ function plotMatrix(){
     }
   );
   $("#table-matriz").show();
+
+  if(width<800){
+    $(".grid-wrappers").first().hide();
+  }
+
   if($("#hide-matriz").is(":checked")){
     $("#hideMatrizLabel").click();
   }

@@ -67,13 +67,16 @@ function tripsLegend(colorFunction, maxLegend){
     legendStroke(colorGrad, maxLegend, "N° de viagens");
 }
 
-
 function plotOriginTrips(){
   clearAll();
   lastPlot = "originTrips";
 
   tripsRepresentation(originOD, blueColorFunction);
    $("#container-legend").css('display','flex');
+
+   if(width<800){
+     $(".resetBtn").first().show();
+   }
 }
 
 $("#originTripsBtn").click(function() {
@@ -86,6 +89,10 @@ function plotDestinyTrips(){
 
   tripsRepresentation(destinyOD,redColorFunction);
   $("#container-legend").css('display','flex');
+
+  if(width<800){
+    $(".resetBtn").first().show();
+  }
 }
 
 $("#destinyTripsBtn").click(function() {
@@ -271,6 +278,7 @@ function createFlowOdCentroids(data, max, currentZoom){
 function plotFlowOD(){
 
   clearAll();
+  $("#loader").show();
   lastPlot = "flowOD";
 
   d3.json(flowOdURL,
@@ -287,7 +295,17 @@ function plotFlowOD(){
 
       legendCircle(colorGrad, max, "n° de viagens intra-zonal")
       legendVariableStroke(max, colorGrad, "n° de viagens entre zonas");
+
+      if(width<800){
+          $("#container-legend svg").last().hide();
+      }
+
   });
 
   $("#container-legend").css('display','flex');
+  $("#loader").hide();
+
+  if(width<800){
+    $(".resetBtn").first().show();
+  }
 }
